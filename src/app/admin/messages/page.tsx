@@ -1,4 +1,4 @@
-import { formatDate } from "@/lib/utils";
+import { formatDate, API_BASE_URL } from "@/lib/utils";
 
 export default async function AdminMessages() {
   let messages: Array<{
@@ -7,7 +7,7 @@ export default async function AdminMessages() {
   }> = [];
 
   try {
-    const res = await fetch("http://localhost:5000/api/contact/messages", { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/api/contact/messages`, { cache: "no-store" });
     if (res.ok) {
       messages = await res.json();
     }

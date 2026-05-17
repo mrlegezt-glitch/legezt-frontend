@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { API_BASE_URL } from "@/lib/utils";
 
 export async function GET() {
   try {
-    const res = await fetch("http://localhost:5000/api/documents", { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" });
     const data = await res.json();
     return NextResponse.json(data, { status: res.status });
   } catch (error) {
@@ -14,7 +15,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const res = await fetch("http://localhost:5000/api/documents", {
+    const res = await fetch(`${API_BASE_URL}/api/documents`, {
       method: "POST",
       body: formData,
     });

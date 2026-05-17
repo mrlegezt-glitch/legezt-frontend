@@ -1,17 +1,18 @@
 import Link from "next/link";
+import { API_BASE_URL } from "@/lib/utils";
 
 export default async function HomePage() {
   let services: Array<{ id: string; title: string; description: string; icon: string | null; features: string }> = [];
   let documents: Array<{ id: string; title: string; description: string | null; category: string | null; downloads: number; fileName: string }> = [];
 
   try {
-    const sRes = await fetch("http://localhost:5000/api/services", { cache: "no-store" });
+    const sRes = await fetch(`${API_BASE_URL}/api/services`, { cache: "no-store" });
     if (sRes.ok) {
       const allServices = await sRes.json();
       services = allServices.slice(0, 6);
     }
 
-    const dRes = await fetch("http://localhost:5000/api/documents", { cache: "no-store" });
+    const dRes = await fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" });
     if (dRes.ok) {
       const allDocs = await dRes.json();
       documents = allDocs.filter((d: any) => d.isPublic).slice(0, 4);

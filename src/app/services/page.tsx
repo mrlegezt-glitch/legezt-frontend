@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { API_BASE_URL } from "@/lib/utils";
+
 export const metadata: Metadata = {
   title: "Services — Legezt",
   description: "Explore our professional services. Quality solutions tailored to your needs.",
@@ -12,7 +14,7 @@ export default async function ServicesPage() {
   }> = [];
 
   try {
-    const res = await fetch("http://localhost:5000/api/services", { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/api/services`, { cache: "no-store" });
     if (res.ok) {
       services = await res.json();
     }

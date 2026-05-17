@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "@/lib/utils";
+
 export default async function AdminDashboard() {
   let docCount = 0, serviceCount = 0, messageCount = 0, unreadCount = 0;
   let totalDownloads = 0;
@@ -5,9 +7,9 @@ export default async function AdminDashboard() {
 
   try {
     const [docsRes, servicesRes, messagesRes] = await Promise.all([
-      fetch("http://localhost:5000/api/documents", { cache: "no-store" }),
-      fetch("http://localhost:5000/api/services/admin", { cache: "no-store" }),
-      fetch("http://localhost:5000/api/contact/messages", { cache: "no-store" }),
+      fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" }),
+      fetch(`${API_BASE_URL}/api/services/admin`, { cache: "no-store" }),
+      fetch(`${API_BASE_URL}/api/contact/messages`, { cache: "no-store" }),
     ]);
 
     if (docsRes.ok) {

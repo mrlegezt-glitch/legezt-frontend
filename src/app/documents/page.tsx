@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DocumentList } from "@/components/features/DocumentList";
 
+import { API_BASE_URL } from "@/lib/utils";
+
 export const metadata: Metadata = {
   title: "Documents — Legezt",
   description: "Browse and download professional documents, templates, and resources.",
@@ -14,7 +16,7 @@ export default async function DocumentsPage() {
   }> = [];
 
   try {
-    const res = await fetch("http://localhost:5000/api/documents", { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" });
     if (res.ok) {
       documents = await res.json();
     }
