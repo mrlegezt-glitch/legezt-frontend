@@ -16,7 +16,7 @@ export default async function DocumentsPage() {
   }> = [];
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" });
+    const res = await fetch(`${API_BASE_URL}/api/documents`, { next: { revalidate: 30 } });
     if (res.ok) {
       documents = await res.json();
     }

@@ -6,13 +6,16 @@ export default async function HomePage() {
   let documents: Array<{ id: string; title: string; description: string | null; category: string | null; downloads: number; fileName: string }> = [];
 
   try {
-    const sRes = await fetch(`${API_BASE_URL}/api/services`, { cache: "no-store" });
+    const [sRes, dRes] = await Promise.all([
+      fetch(`${API_BASE_URL}/api/services`, { next: { revalidate: 30 } }),
+      fetch(`${API_BASE_URL}/api/documents`, { next: { revalidate: 30 } }),
+    ]);
+
     if (sRes.ok) {
       const allServices = await sRes.json();
       services = allServices.slice(0, 6);
     }
 
-    const dRes = await fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" });
     if (dRes.ok) {
       const allDocs = await dRes.json();
       documents = allDocs.filter((d: any) => d.isPublic).slice(0, 4);
