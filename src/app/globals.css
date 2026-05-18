@@ -90,17 +90,17 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 
 /* ===== NAVBAR ===== */
 .navbar {
-  background: rgba(5, 5, 15, 0.85);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(255, 0, 0, 0.25);
+  background: rgba(200, 205, 220, 0.15); /* Futuristic sleek silver glass */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25); /* Premium silver line */
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.7),
-    0 0 30px rgba(255, 0, 0, 0.12);
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
   position: sticky;
   top: 0;
   z-index: 999;
-  padding: 16px 0;
+  padding: 10px 0; /* Compact sleek height */
   transition: var(--transition);
 }
 .navbar-inner {
@@ -119,7 +119,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   color: var(--text-primary);
 }
 .nav-logo-img {
-  height: 80px; width: 80px; object-fit: contain;
+  height: 48px; width: 48px; object-fit: contain;
   transition: var(--transition);
 }
 .nav-logo:hover .nav-logo-img {
