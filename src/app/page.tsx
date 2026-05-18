@@ -53,13 +53,13 @@ export default async function HomePage() {
             </div>
             <div className="hero-title-container">
               <h1 className="hero-scroll-title">
-                <span className="scroll-wrapper">
-                  <span className="scroll-item">MR LEGEZT</span>
-                  <span className="scroll-item">THE LEGEZT</span>
-                  <span className="scroll-item">W LEGEZT</span>
-                  <span className="scroll-item">I AM LEGEZT</span>
-                  <span className="scroll-item">MR LEGEZT</span>
-                </span>
+                <div className="scroll-wrapper">
+                  <div className="scroll-item">MR LEGEZT</div>
+                  <div className="scroll-item">THE LEGEZT</div>
+                  <div className="scroll-item">W LEGEZT</div>
+                  <div className="scroll-item">I AM LEGEZT</div>
+                  <div className="scroll-item">MR LEGEZT</div>
+                </div>
               </h1>
             </div>
             <p className="hero-subtitle">
