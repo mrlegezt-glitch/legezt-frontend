@@ -6,12 +6,8 @@ import { AdminLayoutClient } from "@/components/ui/AdminLayoutClient";
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
 
-  const adminId = process.env.ADMIN_USER_ID;
   const adminEmail = process.env.ADMIN_EMAIL;
-  
-  const hasMatchingId = user && (user.id === adminId || user.username === adminId);
-  const hasMatchingEmail = user && user.primaryEmailAddress?.emailAddress === adminEmail;
-  const isAuthorized = hasMatchingId && hasMatchingEmail;
+  const isAuthorized = user && user.primaryEmailAddress?.emailAddress === adminEmail;
 
   if (!isAuthorized) {
     return (

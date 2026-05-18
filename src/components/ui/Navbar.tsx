@@ -10,12 +10,8 @@ export function Navbar() {
   const { userId } = useAuth();
   const { user } = useUser();
 
-  const adminId = process.env.NEXT_PUBLIC_ADMIN_USER_ID;
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-  
-  const hasMatchingId = user && (user.id === adminId || user.username === adminId);
-  const hasMatchingEmail = user && user.primaryEmailAddress?.emailAddress === adminEmail;
-  const isAdmin = hasMatchingId && hasMatchingEmail;
+  const isAdmin = user && user.primaryEmailAddress?.emailAddress === adminEmail;
 
   return (
     <nav className="navbar" id="main-navbar">
