@@ -30,6 +30,14 @@ export default async function HomePage() {
       <section className="hero" id="hero-section">
         <div className="hero-grid-bg"></div>
         <div className="hero-radial-glow"></div>
+        {/* Cinematic Background Slideshow synced with text transitions */}
+        <div className="hero-slideshow-container">
+          <div className="hero-slide slide-1" style={{ backgroundImage: 'url("/bg-1.png")' }}></div>
+          <div className="hero-slide slide-2" style={{ backgroundImage: 'url("/bg-2.png")' }}></div>
+          <div className="hero-slide slide-3" style={{ backgroundImage: 'url("/bg-3.png")' }}></div>
+          <div className="hero-slide slide-4" style={{ backgroundImage: 'url("/bg-4.png")' }}></div>
+          <div className="hero-slideshow-overlay"></div>
+        </div>
         <div className="hero-particles">
           {Array.from({ length: 25 }).map((_, i) => (
             <div
