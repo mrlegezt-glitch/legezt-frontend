@@ -484,16 +484,170 @@ textarea.form-input { min-height: 150px; resize: vertical; }
   padding: 28px 0; position: fixed; top: 80px; bottom: 0; overflow-y: auto;
   backdrop-filter: blur(20px);
 }
-.sidebar-nav { list-style: none; }
-.sidebar-nav a {
-  display: flex; align-items: center; gap: 14px; padding: 14px 28px;
-  color: var(--text-secondary); font-size: 0.88rem; font-weight: 600;
-  transition: var(--transition); border-left: 3px solid transparent;
+.sidebar-nav {
+  list-style: none;
+  padding: 0 16px;
 }
-.sidebar-nav a:hover, .sidebar-nav a.active {
-  color: var(--text-primary); background: rgba(218, 38, 28, 0.03);
-  border-left-color: var(--accent-primary);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+
+/* Premium Cyberpunk 3D Push-Button System */
+.sidebar-3d-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 3D Drop Shadow Layer */
+.btn-3d-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+/* 3D Extruded Depth Edge Layer */
+.btn-3d-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+    to right,
+    #0C1E8B 0%,
+    #050e4a 10%,
+    #050e4a 90%,
+    #0C1E8B 100%
+  );
+}
+
+/* 3D Front Plate Layer (Default Inactive) */
+.btn-3d-front {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 12px 20px;
+  border-radius: 12px;
+  color: var(--text-secondary);
+  background: rgba(12, 30, 139, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: 
+    transform 600ms cubic-bezier(.3, .7, .4, 1),
+    background 600ms,
+    color 600ms,
+    border-color 600ms;
+}
+
+.btn-3d-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 14px;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.btn-3d-label {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Hover States (Raises the 3D Plate up) */
+.sidebar-3d-button:hover .btn-3d-front {
+  transform: translateY(-6px);
+  background: rgba(12, 30, 139, 0.15);
+  color: #ffffff;
+  border-color: rgba(12, 30, 139, 0.3);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.sidebar-3d-button:hover .btn-3d-shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.sidebar-3d-button:hover .btn-3d-icon-box {
+  color: #ffffff;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+}
+
+/* Click/Active States (Depresses the Plate down) */
+.sidebar-3d-button:active .btn-3d-front {
+  transform: translateY(-1px);
+  transition: transform 34ms;
+}
+
+.sidebar-3d-button:active .btn-3d-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+/* 3D Front Plate (Active/Selected Mode) */
+.sidebar-3d-button.active .btn-3d-front {
+  background: linear-gradient(135deg, #DA261C 0%, #741511 100%);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(218, 38, 28, 0.25);
+  transform: translateY(-2px);
+}
+
+.sidebar-3d-button.active .btn-3d-edge {
+  background: linear-gradient(
+    to right,
+    #741511 0%,
+    #4a0d0a 10%,
+    #4a0d0a 90%,
+    #741511 100%
+  );
+}
+
+.sidebar-3d-button.active .btn-3d-shadow {
+  transform: translateY(1px);
+  background: rgba(218, 38, 28, 0.3);
+}
+
+.sidebar-3d-button.active .btn-3d-icon-box {
+  color: #ffffff;
+}
+
+/* 3D Back to Site Button Override */
+.sidebar-3d-button.back-btn .btn-3d-front {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-3d-button.back-btn .btn-3d-edge {
+  background: linear-gradient(
+    to right,
+    #3f3f46 0%,
+    #18181b 10%,
+    #18181b 90%,
+    #3f3f46 100%
+  );
+}
+
+.sidebar-3d-button.back-btn:hover .btn-3d-front {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 .admin-content { flex: 1; margin-left: 270px; padding: 36px; }
 .admin-header {
