@@ -44,7 +44,7 @@ export function Navbar() {
   if (isAdminPath) {
     return (
       <nav className="navbar" id="main-navbar">
-        <div className="navbar-inner">
+        <div className="navbar-inner admin-navbar-inner">
           <a href="https://mrlegezt.me" className="nav-logo">
             <img src="/logo.svg" alt="Legezt Logo" className="nav-logo-img" />
             <span className="nav-logo-text">LEGEZT</span>

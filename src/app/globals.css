@@ -107,6 +107,11 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   display: flex; align-items: center; justify-content: space-between;
   max-width: 1200px; margin: 0 auto; padding: 0 28px;
 }
+.admin-navbar-inner {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 40px !important;
+}
 .nav-logo {
   display: flex; align-items: center; gap: 14px;
   font-family: var(--font-display);
