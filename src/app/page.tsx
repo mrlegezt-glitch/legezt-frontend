@@ -217,7 +217,7 @@ export default async function HomePage() {
           <div className="footer-grid">
             <div className="footer-brand">
               <div className="nav-logo">
-                <img src="/logo.png" alt="Legezt Logo" className="nav-logo-img" />
+                <img src="/logo.svg" alt="Legezt Logo" className="nav-logo-img" />
                 <span className="nav-logo-text">LEGEZT</span>
               </div>
               <p>Professional document distribution platform. Quality resources, expert services, and seamless access.</p>
