@@ -406,6 +406,73 @@ textarea.form-input { min-height: 120px; resize: vertical; }
 .empty-state-icon { font-size: 3rem; margin-bottom: 16px; }
 .empty-state-title { font-size: 1.2rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
 
+/* ===== AUTH PAGES LAYOUT ===== */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  padding: 120px 24px 64px;
+  box-sizing: border-box;
+}
+
+.auth-card-clerk {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== CLERK PREMIUM DARK THEME OVERRIDES ===== */
+.cl-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.cl-headerTitle {
+  color: var(--text-primary) !important;
+}
+.cl-headerSubtitle {
+  color: var(--text-secondary) !important;
+}
+.cl-socialButtonsBlockButton {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+.cl-socialButtonsBlockButtonText {
+  color: var(--text-primary) !important;
+}
+.cl-formFieldLabel {
+  color: var(--text-secondary) !important;
+}
+.cl-formFieldInput {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+.cl-formFieldInput:focus {
+  border-color: var(--accent-primary) !important;
+}
+.cl-formButtonPrimary {
+  background: var(--gradient-main) !important;
+  color: #ffffff !important;
+}
+.cl-footerActionText {
+  color: var(--text-secondary) !important;
+}
+.cl-footerActionLink {
+  color: var(--accent-primary) !important;
+}
+.cl-dividerText {
+  color: var(--text-muted) !important;
+}
+.cl-dividerLine {
+  background-color: var(--border-color) !important;
+}
+
 /* ===== CLERK BRANDING BYPASS ===== */
 .cl-footer,
 .cl-internal-197ac72,
