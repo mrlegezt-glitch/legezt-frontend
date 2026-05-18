@@ -52,8 +52,15 @@ export default async function HomePage() {
               SYSTEMS ENGAGED & AVAILABLE
             </div>
             <div className="hero-title-container">
-              <h2 className="title-dangerously">DANGEROUSLY</h2>
-              <h1 className="title-mrlegezt">MR LEGEZT</h1>
+              <h1 className="hero-scroll-title">
+                <span className="scroll-wrapper">
+                  <span className="scroll-item">MR LEGEZT</span>
+                  <span className="scroll-item">THE LEGEZT</span>
+                  <span className="scroll-item">W LEGEZT</span>
+                  <span className="scroll-item">I AM LEGEZT</span>
+                  <span className="scroll-item">MR LEGEZT</span>
+                </span>
+              </h1>
             </div>
             <p className="hero-subtitle">
               Professional AI services, automation systems, premium digital resources, intelligent tools, and cyber solutions. Engineered for elite digital operations.
