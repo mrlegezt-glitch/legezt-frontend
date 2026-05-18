@@ -27,18 +27,16 @@ jobs:
           npm install
           npm run build
 
-      - name: Zip Frontend Artifacts
+      - name: Package Standalone Next.js App
         run: |
-          # Create a deployment directory excluding node_modules and source files
-          mkdir deploy_dir
-          cp -r .next deploy_dir/
-          cp -r public deploy_dir/
-          cp package.json deploy_dir/
-          cp package-lock.json deploy_dir/
-          cp next.config.ts deploy_dir/
-          cd deploy_dir
-          zip -r ../deploy.zip .
-          cd ..
+          # Copy public and static assets into the standalone folder to be served by server.js
+          cp -r public .next/standalone/
+          cp -r .next/static .next/standalone/.next/
+          
+          # Zip the standalone folder contents directly
+          cd .next/standalone
+          zip -r ../../deploy.zip .
+          cd ../..
 
       - name: Login to Azure
         uses: azure/login@v2
