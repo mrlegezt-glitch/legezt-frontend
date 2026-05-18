@@ -1,5 +1,7 @@
 import { formatDate, API_BASE_URL } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminMessages() {
   let messages: Array<{
     id: string; name: string; email: string; subject: string | null;

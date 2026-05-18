@@ -7,8 +7,8 @@ export default async function HomePage() {
 
   try {
     const [sRes, dRes] = await Promise.all([
-      fetch(`${API_BASE_URL}/api/services`, { next: { revalidate: 30 } }),
-      fetch(`${API_BASE_URL}/api/documents`, { next: { revalidate: 30 } }),
+      fetch(`${API_BASE_URL}/api/services`, { signal: AbortSignal.timeout(5000), next: { revalidate: 30 } }),
+      fetch(`${API_BASE_URL}/api/documents`, { signal: AbortSignal.timeout(5000), next: { revalidate: 30 } }),
     ]);
 
     if (sRes.ok) {

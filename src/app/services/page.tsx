@@ -14,7 +14,7 @@ export default async function ServicesPage() {
   }> = [];
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/services`, { next: { revalidate: 30 } });
+    const res = await fetch(`${API_BASE_URL}/api/services`, { signal: AbortSignal.timeout(5000), next: { revalidate: 30 } });
     if (res.ok) {
       services = await res.json();
     }

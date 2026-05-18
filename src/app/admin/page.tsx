@@ -1,5 +1,7 @@
 import { API_BASE_URL } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
   let docCount = 0, serviceCount = 0, messageCount = 0, unreadCount = 0;
   let totalDownloads = 0;
