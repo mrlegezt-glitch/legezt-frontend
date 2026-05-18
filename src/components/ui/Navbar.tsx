@@ -11,7 +11,11 @@ export function Navbar() {
   const { user } = useUser();
 
   const adminId = process.env.NEXT_PUBLIC_ADMIN_USER_ID;
-  const isAdmin = user && (user.id === adminId || user.username === adminId);
+  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+  
+  const hasMatchingId = user && (user.id === adminId || user.username === adminId);
+  const hasMatchingEmail = user && user.primaryEmailAddress?.emailAddress === adminEmail;
+  const isAdmin = hasMatchingId && hasMatchingEmail;
 
   return (
     <nav className="navbar" id="main-navbar">
@@ -28,7 +32,15 @@ export function Navbar() {
           <li><Link href="/resume" onClick={() => setMobileOpen(false)}>Resume</Link></li>
           <li><Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link></li>
           {userId && isAdmin && (
-            <li><Link href="/admin" onClick={() => setMobileOpen(false)} style={{ color: "var(--accent-primary)" }}>Admin</Link></li>
+            <li>
+              <a 
+                href={process.env.NODE_ENV === "development" ? "http://admin.localhost:3000" : "https://admin.mrlegezt.me"} 
+                onClick={() => setMobileOpen(false)} 
+                style={{ color: "var(--accent-primary)", fontWeight: "bold" }}
+              >
+                Admin Console
+              </a>
+            </li>
           )}
         </ul>
 
