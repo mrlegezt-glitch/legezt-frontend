@@ -139,7 +139,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   background: #020204;
 }
 .hero-grid-bg {
-  position: absolute; inset: 0; z-index: 0;
+  position: absolute; inset: 0; z-index: 1;
   background-image: 
     linear-gradient(rgba(255, 15, 58, 0.015) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 15, 58, 0.015) 1px, transparent 1px);
@@ -150,12 +150,12 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   opacity: 0.75;
 }
 .hero-radial-glow {
-  position: absolute; inset: 0; z-index: 0;
+  position: absolute; inset: 0; z-index: 2;
   background: radial-gradient(circle at 75% 50%, rgba(255, 15, 58, 0.15) 0%, transparent 60%),
               radial-gradient(circle at 25% 80%, rgba(255, 15, 58, 0.06) 0%, transparent 50%);
 }
 .hero-particles {
-  position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  position: absolute; inset: 0; z-index: 4; overflow: hidden;
 }
 .particle {
   position: absolute; width: 3px; height: 3px; border-radius: 50%;
@@ -165,10 +165,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .particle:nth-child(2n) { background: var(--accent-tertiary); animation-delay: -3s; animation-duration: 12s; }
 .particle:nth-child(3n) { background: #ff4d6d; animation-delay: -5s; animation-duration: 14s; }
-
+ 
 .hero-two-column {
   display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px;
-  align-items: center; z-index: 1; width: 100%; max-width: 1200px;
+  align-items: center; z-index: 10; width: 100%; max-width: 1200px;
   padding: 0 24px; margin: 0 auto;
 }
 .hero-left {
@@ -620,7 +620,7 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 .hero-slideshow-container {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 3;
   overflow: hidden;
   pointer-events: none;
 }
@@ -630,7 +630,7 @@ textarea.form-input { min-height: 140px; resize: vertical; }
   background-size: cover;
   background-position: center;
   opacity: 0;
-  filter: grayscale(35%) contrast(120%) brightness(35%);
+  filter: grayscale(20%) contrast(110%) brightness(65%);
   transition: opacity 1s ease-in-out;
   animation-duration: 10s, 36s;
   animation-iteration-count: infinite, infinite;
@@ -653,27 +653,27 @@ textarea.form-input { min-height: 140px; resize: vertical; }
   inset: 0;
   background: radial-gradient(circle at center, rgba(2, 2, 4, 0.45) 0%, rgba(2, 2, 4, 0.95) 90%),
               linear-gradient(to bottom, transparent 50%, rgba(2, 2, 4, 1) 100%);
-  z-index: 1;
+  z-index: 5;
 }
 
 @keyframes bg-slide-1 {
-  0%, 20% { opacity: 0.28; }
+  0%, 20% { opacity: 0.55; }
   25%, 95% { opacity: 0; }
-  100% { opacity: 0.28; }
+  100% { opacity: 0.55; }
 }
 @keyframes bg-slide-2 {
   0%, 20% { opacity: 0; }
-  25%, 45% { opacity: 0.28; }
+  25%, 45% { opacity: 0.55; }
   50%, 100% { opacity: 0; }
 }
 @keyframes bg-slide-3 {
   0%, 45% { opacity: 0; }
-  50%, 70% { opacity: 0.28; }
+  50%, 70% { opacity: 0.55; }
   75%, 100% { opacity: 0; }
 }
 @keyframes bg-slide-4 {
   0%, 70% { opacity: 0; }
-  75%, 95% { opacity: 0.28; }
+  75%, 95% { opacity: 0.55; }
   100% { opacity: 0; }
 }
 @keyframes kenburns-slow {
