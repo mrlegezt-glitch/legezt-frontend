@@ -11,6 +11,7 @@ const navItems = [
   { href: "/admin/documents", label: "Documents", icon: "📄" },
   { href: "/admin/services", label: "Services", icon: "🛠️" },
   { href: "/admin/messages", label: "Messages", icon: "✉️" },
+  { href: "/admin/email", label: "Email Workspace", icon: "📨" },
 ];
 
 export function AdminLayoutClient({ children }: { children: React.ReactNode }) {

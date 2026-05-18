@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export function Navbar() {
@@ -11,6 +11,26 @@ export function Navbar() {
   const { userId } = useAuth();
   const { user } = useUser();
   const pathname = usePathname();
+
+  // Dispatch automatic session Welcome Back email exactly once per session
+  useEffect(() => {
+    if (userId && user) {
+      const email = user.primaryEmailAddress?.emailAddress;
+      if (!email) return;
+
+      const sessionKey = `welcome_back_sent_${email}`;
+      if (sessionStorage.getItem(sessionKey)) return;
+
+      fetch("/api/auth/login-event", { method: "POST" })
+        .then(res => {
+          if (res.ok) {
+            sessionStorage.setItem(sessionKey, "true");
+            console.log("Welcome back email alert dispatched successfully!");
+          }
+        })
+        .catch(err => console.error("Error triggering session Welcome Back email:", err));
+    }
+  }, [userId, user]);
 
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
   const isAdmin = user && (
