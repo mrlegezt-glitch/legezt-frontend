@@ -38,16 +38,28 @@ export function Navbar() {
               </a>
             </li>
           )}
+          <Show when="signed-out">
+            <li className="mobile-auth-links">
+              <SignInButton>
+                <button className="btn btn-secondary btn-sm" style={{ width: "100%", marginBottom: "12px" }} onClick={() => setMobileOpen(false)}>Sign In</button>
+              </SignInButton>
+              <SignUpButton>
+                <button className="btn btn-primary btn-sm" style={{ width: "100%" }} onClick={() => setMobileOpen(false)}>Sign Up</button>
+              </SignUpButton>
+            </li>
+          </Show>
         </ul>
 
         <div className="nav-auth">
           <Show when="signed-out">
-            <SignInButton>
-              <button className="btn btn-secondary btn-sm">Sign In</button>
-            </SignInButton>
-            <SignUpButton>
-              <button className="btn btn-primary btn-sm">Sign Up</button>
-            </SignUpButton>
+            <div className="desktop-auth-only">
+              <SignInButton>
+                <button className="btn btn-secondary btn-sm">Sign In</button>
+              </SignInButton>
+              <SignUpButton>
+                <button className="btn btn-primary btn-sm">Sign Up</button>
+              </SignUpButton>
+            </div>
           </Show>
           <Show when="signed-in">
             <UserButton

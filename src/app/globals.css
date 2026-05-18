@@ -101,6 +101,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .nav-links a:hover::after { width: 100%; }
 .nav-auth { display: flex; gap: 14px; align-items: center; }
+.desktop-auth-only { display: flex; gap: 14px; align-items: center; }
+.mobile-auth-links { display: none; }
 .mobile-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
 .mobile-toggle span { width: 24px; height: 2px; background: var(--text-primary); transition: var(--transition); }
 
@@ -586,6 +588,14 @@ textarea.form-input { min-height: 140px; resize: vertical; }
     display: flex; flex-direction: column; position: absolute;
     top: 100%; left: 0; right: 0; background: var(--bg-secondary);
     padding: 24px; gap: 16px; border-bottom: 1px solid var(--border-color);
+  }
+  .desktop-auth-only { display: none !important; }
+  .mobile-auth-links {
+    display: block !important;
+    width: 100%;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255, 15, 58, 0.1);
+    padding-top: 16px;
   }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .admin-sidebar { display: none; }
