@@ -405,3 +405,15 @@ textarea.form-input { min-height: 120px; resize: vertical; }
 }
 .empty-state-icon { font-size: 3rem; margin-bottom: 16px; }
 .empty-state-title { font-size: 1.2rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
+
+/* ===== CLERK BRANDING BYPASS ===== */
+.cl-footer,
+.cl-internal-197ac72,
+.cl-internal-180e22m,
+.cl-internal-1np1g8m,
+.cl-internal-b38t6s,
+.cl-footerAction,
+.cl-rootBox a[href*="clerk.com"],
+div[data-testid="safe-area"] > div:last-child {
+  display: none !important;
+}
