@@ -28,54 +28,67 @@ export default async function HomePage() {
     <div className="page-enter">
       {/* Hero Section */}
       <section className="hero" id="hero-section">
-        <div className="hero-bg"></div>
+        <div className="hero-grid-bg"></div>
+        <div className="hero-radial-glow"></div>
         <div className="hero-particles">
-          {Array.from({ length: 20 }).map((_, i) => (
+          {Array.from({ length: 25 }).map((_, i) => (
             <div
               key={i}
               className="particle"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * -8}s`,
+                animationDelay: `${Math.random() * -10}s`,
                 width: `${2 + Math.random() * 3}px`,
                 height: `${2 + Math.random() * 3}px`,
               }}
             />
           ))}
         </div>
-        <div className="hero-content">
-          <div className="hero-badge">
-            <span className="dot"></span>
-            Available for Projects
-          </div>
-          <h1 className="hero-title">
-            Professional <span className="text-gradient">Document Distribution</span> Platform
-          </h1>
-          <p className="hero-subtitle">
-            Access premium documents, explore professional services, and connect with expertise.
-            Your one-stop platform for quality resources.
-          </p>
-          <div className="hero-actions">
-            <Link href="/documents" className="btn btn-primary">
-              📄 Browse Documents
-            </Link>
-            <Link href="/services" className="btn btn-secondary">
-              🛠️ View Services
-            </Link>
-          </div>
-          <div className="hero-stats">
-            <div className="stat">
-              <div className="stat-value text-gradient">{documents.length}+</div>
-              <div className="stat-label">Documents</div>
+        <div className="hero-two-column">
+          <div className="hero-left">
+            <div className="hero-badge">
+              <span className="dot"></span>
+              SYSTEMS ENGAGED & AVAILABLE
             </div>
-            <div className="stat">
-              <div className="stat-value text-gradient">{services.length}+</div>
-              <div className="stat-label">Services</div>
+            <div className="hero-title-container">
+              <h2 className="title-dangerously">DANGEROUSLY</h2>
+              <h1 className="title-mrlegezt">MR LEGEZT</h1>
             </div>
-            <div className="stat">
-              <div className="stat-value text-gradient">24/7</div>
-              <div className="stat-label">Available</div>
+            <p className="hero-subtitle">
+              Professional AI services, automation systems, premium digital resources, intelligent tools, and cyber solutions. Engineered for elite digital operations.
+            </p>
+            <div className="hero-actions">
+              <Link href="/documents" className="btn btn-primary">
+                ⚡ ACCESS DATA VAULT
+              </Link>
+              <Link href="/services" className="btn btn-secondary">
+                ⚙️ EXPLORE OPERATIONS
+              </Link>
+            </div>
+            <div className="hero-stats">
+              <div className="stat">
+                <div className="stat-value">{documents.length}+</div>
+                <div className="stat-label">VAULT FILES</div>
+              </div>
+              <div className="stat">
+                <div className="stat-value">{services.length}+</div>
+                <div className="stat-label">OPERATIONS</div>
+              </div>
+              <div className="stat">
+                <div className="stat-value">24/7</div>
+                <div className="stat-label">uptime</div>
+              </div>
+            </div>
+          </div>
+          <div className="hero-right">
+            <div className="logo-container">
+              <div className="logo-aura-glow"></div>
+              <div className="logo-smoke-layer"></div>
+              <div className="logo-lightning-layer"></div>
+              <img src="/logo.png" alt="Outer Ring Glow" className="logo-layer-back" />
+              <img src="/logo.png" alt="Inner Ring Parallax" className="logo-layer-mid" />
+              <img src="/logo.png" alt="Sharingan Crimson Core Logo" className="logo-layer-front" />
             </div>
           </div>
         </div>
@@ -183,7 +196,10 @@ export default async function HomePage() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <div className="nav-logo"><span className="text-gradient">Legezt</span></div>
+              <div className="nav-logo">
+                <img src="/logo.png" alt="Legezt Logo" className="nav-logo-img" />
+                <span className="nav-logo-text">LEGEZT</span>
+              </div>
               <p>Professional document distribution platform. Quality resources, expert services, and seamless access.</p>
             </div>
             <div>

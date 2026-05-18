@@ -17,7 +17,8 @@ export function Navbar() {
     <nav className="navbar" id="main-navbar">
       <div className="navbar-inner">
         <Link href="/" className="nav-logo">
-          <span className="text-gradient">Legezt</span>
+          <img src="/logo.png" alt="Legezt Logo" className="nav-logo-img" />
+          <span className="nav-logo-text">LEGEZT</span>
         </Link>
 
         <ul className={`nav-links ${mobileOpen ? "open" : ""}`}>
