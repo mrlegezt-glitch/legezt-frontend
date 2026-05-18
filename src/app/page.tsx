@@ -86,9 +86,14 @@ export default async function HomePage() {
               <div className="logo-aura-glow"></div>
               <div className="logo-smoke-layer"></div>
               <div className="logo-lightning-layer"></div>
-              <img src="/logo.png" alt="Outer Ring Glow" className="logo-layer-back" />
-              <img src="/logo.png" alt="Inner Ring Parallax" className="logo-layer-mid" />
-              <img src="/logo.png" alt="Sharingan Crimson Core Logo" className="logo-layer-front" />
+              <video
+                src="/hero-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="hero-cyber-video"
+              />
             </div>
           </div>
         </div>

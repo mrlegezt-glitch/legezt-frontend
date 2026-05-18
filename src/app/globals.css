@@ -254,29 +254,22 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   pointer-events: none;
   z-index: 3;
 }
-.logo-layer-back {
-  position: absolute; width: 340px; height: 340px;
-  opacity: 0.55;
-  filter: blur(8px) brightness(1.5) drop-shadow(0 0 25px rgba(255, 15, 58, 0.8));
-  animation: logo-rotation-cw 48s linear infinite;
-  z-index: 4;
-}
-.logo-layer-mid {
-  position: absolute; width: 320px; height: 320px;
-  opacity: 0.25;
-  transform: rotate(45deg);
-  animation: logo-rotation-ccw 36s linear infinite;
-  z-index: 5;
-}
-.logo-layer-front {
-  position: absolute; width: 310px; height: 310px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 20px rgba(255, 15, 58, 0.4));
+.hero-cyber-video {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  object-fit: cover;
   z-index: 6;
+  border: 3px solid rgba(255, 15, 58, 0.4);
+  box-shadow: 0 0 35px rgba(255, 15, 58, 0.4);
+  filter: drop-shadow(0 0 15px rgba(255, 15, 58, 0.3));
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.logo-layer-front:hover {
+.hero-cyber-video:hover {
   transform: scale(1.03);
+  border-color: rgba(255, 15, 58, 0.75);
+  box-shadow: 0 0 50px rgba(255, 15, 58, 0.65);
 }
 
 /* ===== CARDS ===== */
