@@ -114,7 +114,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
   color: var(--text-primary);
 }
 .nav-logo-img {
-  height: 54px; width: 54px; object-fit: contain;
+  height: 80px; width: 80px; object-fit: contain;
   transition: var(--transition);
 }
 .nav-logo:hover .nav-logo-img {
