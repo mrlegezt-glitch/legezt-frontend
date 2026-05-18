@@ -1,4 +1,5 @@
 import { formatDate, API_BASE_URL } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +10,11 @@ export default async function AdminMessages() {
   }> = [];
 
   try {
-    const res = await fetch(`${API_BASE_URL}/api/contact/messages`, { cache: "no-store" });
+    const { getToken } = await auth();
+    const token = await getToken();
+    const headers = { "Authorization": `Bearer ${token}` };
+
+    const res = await fetch(`${API_BASE_URL}/api/contact/messages`, { headers, cache: "no-store" });
     if (res.ok) {
       messages = await res.json();
     }

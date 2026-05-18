@@ -9,13 +9,26 @@ export default clerkMiddleware(async (auth, req) => {
   const isAdminDomain = hostname === "admin.mrlegezt.me" || hostname.startsWith("admin.localhost");
 
   if (isAdminDomain) {
+    // Normalise pathname to remove duplicate slashes (e.g. //verify -> /verify)
+    const pathname = url.pathname.replace(/\/+/g, "/");
+
+    // If accessing Clerk authentication/verification paths, let them pass through natively
+    const isAuthPath = pathname.startsWith("/sign-in") || 
+                       pathname.startsWith("/sign-up") || 
+                       pathname.startsWith("/verify") ||
+                       pathname.startsWith("/api");
+
+    if (isAuthPath) {
+      return NextResponse.next();
+    }
+
     // If accessing the root of the admin domain, rewrite to /admin
-    if (url.pathname === "/") {
+    if (pathname === "/") {
       return NextResponse.rewrite(new URL("/admin", req.url));
     }
     // If accessing a sub-path like /documents, rewrite to /admin/documents
-    if (!url.pathname.startsWith("/admin")) {
-      return NextResponse.rewrite(new URL(`/admin${url.pathname}`, req.url));
+    if (!pathname.startsWith("/admin")) {
+      return NextResponse.rewrite(new URL(`/admin${pathname}`, req.url));
     }
   }
 

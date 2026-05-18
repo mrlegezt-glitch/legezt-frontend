@@ -4,26 +4,28 @@
 :root {
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Orbitron', 'Inter', -apple-system, sans-serif;
-  --bg-primary: #020204;
-  --bg-secondary: #08080c;
-  --bg-card: #0d0d12;
-  --bg-card-hover: #14141d;
-  --bg-glass: rgba(13, 13, 18, 0.75);
-  --border-color: rgba(255, 15, 58, 0.08);
-  --border-glow: rgba(255, 15, 58, 0.35);
-  --text-primary: #f5f5fa;
-  --text-secondary: #9090a5;
-  --text-muted: #5a5a70;
-  --accent-primary: #ff0f3a;
-  --accent-secondary: #9b000e;
-  --accent-tertiary: #d90429;
-  --gradient-main: linear-gradient(135deg, #ff0f3a, #9b000e);
-  --gradient-subtle: linear-gradient(135deg, rgba(255,15,58,0.15), rgba(155,0,14,0.15));
-  --gradient-card: linear-gradient(145deg, #0d0d12, #08080c);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.5);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.7);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.9);
-  --shadow-glow: 0 0 30px rgba(255, 15, 58, 0.25);
+  --bg-primary: #030624;
+  --bg-secondary: #070c36;
+  --bg-card: #0c104a;
+  --bg-card-hover: #141a6b;
+  --bg-glass: rgba(12, 16, 74, 0.85);
+  --border-color: rgba(218, 38, 28, 0.15);
+  --border-glow: rgba(218, 38, 28, 0.45);
+  --text-primary: #ffffff;
+  --text-secondary: #b8c0f0;
+  --text-muted: #7c88be;
+  --accent-primary: #da261c;
+  --accent-secondary: #741511;
+  --accent-tertiary: #0c1e8b;
+  --gradient-main: linear-gradient(135deg, #da261c, #741511);
+  --gradient-subtle: linear-gradient(135deg, rgba(218, 38, 28, 0.15), rgba(12, 30, 139, 0.15));
+  --gradient-card: linear-gradient(145deg, #0c104a, #070c36);
+  --gradient-fire-ice: linear-gradient(135deg, #da261c, #0c1e8b);
+  --shadow-sm: 0 2px 8px rgba(3, 6, 36, 0.5);
+  --shadow-md: 0 4px 20px rgba(3, 6, 36, 0.7);
+  --shadow-lg: 0 8px 40px rgba(3, 6, 36, 0.9);
+  --shadow-glow: 0 0 30px rgba(218, 38, 28, 0.35);
+  --shadow-glow-blue: 0 0 30px rgba(12, 30, 139, 0.35);
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 18px;
@@ -739,51 +741,48 @@ textarea.form-input { min-height: 140px; resize: vertical; }
 }
 
 /* ===== CLERK PREMIUM DARK THEME OVERRIDES ===== */
-.cl-card {
+.cl-card, [class^="cl-card"] {
   background: var(--bg-card) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: var(--radius-md) !important;
   box-shadow: var(--shadow-lg) !important;
 }
-.cl-headerTitle {
+/* Force all Clerk text labels, titles, descriptions, and user buttons to be bright and visible */
+.cl-headerTitle, [class^="cl-headerTitle"],
+.cl-socialButtonsBlockButtonText, [class^="cl-socialButtonsBlockButtonText"],
+.cl-footerActionLink, [class^="cl-footerActionLink"],
+.cl-formButtonPrimary, [class^="cl-formButtonPrimary"],
+.cl-userButtonOuter, [class^="cl-userButtonOuter"],
+.cl-userButtonTrigger, [class^="cl-userButtonTrigger"],
+.cl-userButtonBox, [class^="cl-userButtonBox"],
+.cl-userButtonTextContainer, [class^="cl-userButtonTextContainer"],
+.cl-rootBox *, [class^="cl-rootBox"] * {
   color: var(--text-primary) !important;
 }
-.cl-headerSubtitle {
+.cl-headerSubtitle, [class^="cl-headerSubtitle"],
+.cl-formFieldLabel, [class^="cl-formFieldLabel"],
+.cl-footerActionText, [class^="cl-footerActionText"],
+.cl-dividerText, [class^="cl-dividerText"] {
   color: var(--text-secondary) !important;
 }
-.cl-socialButtonsBlockButton {
+.cl-socialButtonsBlockButton, [class^="cl-socialButtonsBlockButton"] {
   background: var(--bg-secondary) !important;
   border: 1px solid var(--border-color) !important;
   color: var(--text-primary) !important;
 }
-.cl-socialButtonsBlockButtonText {
-  color: var(--text-primary) !important;
-}
-.cl-formFieldLabel {
-  color: var(--text-secondary) !important;
-}
-.cl-formFieldInput {
+.cl-formFieldInput, [class^="cl-formFieldInput"] {
   background: var(--bg-secondary) !important;
   border: 1px solid var(--border-color) !important;
   color: var(--text-primary) !important;
 }
-.cl-formFieldInput:focus {
+.cl-formFieldInput:focus, [class^="cl-formFieldInput"]:focus {
   border-color: var(--accent-primary) !important;
 }
-.cl-formButtonPrimary {
+.cl-formButtonPrimary, [class^="cl-formButtonPrimary"] {
   background: var(--gradient-main) !important;
   color: #ffffff !important;
 }
-.cl-footerActionText {
-  color: var(--text-secondary) !important;
-}
-.cl-footerActionLink {
-  color: var(--accent-primary) !important;
-}
-.cl-dividerText {
-  color: var(--text-muted) !important;
-}
-.cl-dividerLine {
+.cl-dividerLine, [class^="cl-dividerLine"] {
   background-color: var(--border-color) !important;
 }
 

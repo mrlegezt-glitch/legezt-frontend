@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 
 interface Student {
   id: string;
@@ -17,6 +18,7 @@ export default function StudentsAdminPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", enrollmentNo: "", course: "", batchYear: "", email: "" });
+  const { getToken } = useAuth();
 
   const fetchStudents = async () => {
     try {
@@ -38,9 +40,13 @@ export default function StudentsAdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const token = await getToken();
       await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/students`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify(formData),
       });
       setIsModalOpen(false);
@@ -54,9 +60,13 @@ export default function StudentsAdminPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this student?")) return;
     try {
+      const token = await getToken();
       await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/students`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ id }),
       });
       fetchStudents();

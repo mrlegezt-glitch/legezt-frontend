@@ -4,14 +4,61 @@ import Link from "next/link";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { userId } = useAuth();
   const { user } = useUser();
+  const pathname = usePathname();
 
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-  const isAdmin = user && user.primaryEmailAddress?.emailAddress === adminEmail;
+  const isAdmin = user && (
+    user.primaryEmailAddress?.emailAddress === "mdjbjibran@gmail.com" ||
+    user.primaryEmailAddress?.emailAddress === "mdjibjibran@gmail.com" ||
+    user.primaryEmailAddress?.emailAddress === adminEmail
+  );
+
+  const isAdminPath = pathname.startsWith("/admin");
+
+  if (isAdminPath) {
+    return (
+      <nav className="navbar" id="main-navbar">
+        <div className="navbar-inner">
+          <a href="https://mrlegezt.me" className="nav-logo">
+            <img src="/logo.png" alt="Legezt Logo" className="nav-logo-img" />
+            <span className="nav-logo-text">LEGEZT</span>
+            <span className="admin-badge" style={{
+              marginLeft: '12px',
+              padding: '4px 10px',
+              fontSize: '0.75rem',
+              fontWeight: 'bold',
+              color: 'var(--accent-primary)',
+              border: '1px solid var(--accent-primary)',
+              borderRadius: '20px',
+              letterSpacing: '1px',
+              boxShadow: 'var(--shadow-glow)',
+              textTransform: 'uppercase'
+            }}>
+              Admin Console
+            </span>
+          </a>
+
+          <div className="nav-auth">
+            <Show when="signed-in">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: { width: 36, height: 36 },
+                  },
+                }}
+              />
+            </Show>
+          </div>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <nav className="navbar" id="main-navbar">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 
 interface TeamMember {
   id: string;
@@ -18,6 +19,7 @@ export default function TeamAdminPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", role: "", email: "", githubUrl: "", linkedinUrl: "", imageUrl: "" });
+  const { getToken } = useAuth();
 
   const fetchTeamMembers = async () => {
     try {
@@ -39,9 +41,13 @@ export default function TeamAdminPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const token = await getToken();
       await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/team`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify(formData),
       });
       setIsModalOpen(false);
@@ -55,9 +61,13 @@ export default function TeamAdminPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this team member?")) return;
     try {
+      const token = await getToken();
       await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/team`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ id }),
       });
       fetchTeamMembers();

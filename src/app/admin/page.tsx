@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
 
 export const dynamic = "force-dynamic";
 
@@ -8,10 +9,14 @@ export default async function AdminDashboard() {
   let recentMessages: Array<{ id: string; name: string; email: string; subject: string | null; isRead: boolean; createdAt: string }> = [];
 
   try {
+    const { getToken } = await auth();
+    const token = await getToken();
+    const headers = { "Authorization": `Bearer ${token}` };
+
     const [docsRes, servicesRes, messagesRes] = await Promise.all([
-      fetch(`${API_BASE_URL}/api/documents`, { cache: "no-store" }),
-      fetch(`${API_BASE_URL}/api/services/admin`, { cache: "no-store" }),
-      fetch(`${API_BASE_URL}/api/contact/messages`, { cache: "no-store" }),
+      fetch(`${API_BASE_URL}/api/documents`, { headers, cache: "no-store" }),
+      fetch(`${API_BASE_URL}/api/services/admin`, { headers, cache: "no-store" }),
+      fetch(`${API_BASE_URL}/api/contact/messages`, { headers, cache: "no-store" }),
     ]);
 
     if (docsRes.ok) {
