@@ -46,7 +46,7 @@ export function Navbar() {
       <nav className="navbar" id="main-navbar">
         <div className="navbar-inner admin-navbar-inner">
           <a href="https://mrlegezt.me" className="nav-logo">
-            <img src="/logo.svg" alt="Legezt Logo" className="nav-logo-img" />
+            <img src="/logo.png" alt="Legezt Logo" className="nav-logo-img" style={{ borderRadius: "50%" }} />
             <span className="nav-logo-text">LEGEZT</span>
             <span className="admin-badge" style={{
               marginLeft: '12px',
@@ -84,7 +84,7 @@ export function Navbar() {
     <nav className="navbar" id="main-navbar">
       <div className="navbar-inner">
         <Link href="/" className="nav-logo">
-          <img src="/logo.svg" alt="Legezt Logo" className="nav-logo-img" />
+          <img src="/logo.png" alt="Legezt Logo" className="nav-logo-img" style={{ borderRadius: "50%" }} />
           <span className="nav-logo-text">LEGEZT</span>
         </Link>
 
