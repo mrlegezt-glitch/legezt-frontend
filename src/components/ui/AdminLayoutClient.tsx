@@ -18,7 +18,8 @@ import {
 const navItems = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
   { href: "/admin/faculties", label: "Faculties", Icon: GraduationCap },
-  { href: "/admin/students", label: "Students", Icon: Users },
+  { href: "/admin/students", label: "Students Directory", Icon: Users },
+  { href: "/admin/portal-students", label: "Portal Students", Icon: Users },
   { href: "/admin/team", label: "Team Members", Icon: Briefcase },
   { href: "/admin/documents", label: "Documents", Icon: FileText },
   { href: "/admin/services", label: "Services", Icon: Sliders },
