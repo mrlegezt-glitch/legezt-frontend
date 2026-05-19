@@ -161,6 +161,59 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Academic Portal Section */}
+      <section className="section" id="portal-section" style={{ background: "linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+        <div className="container">
+          <div className="section-header">
+            <div className="section-label">Academic Network</div>
+            <h2 className="section-title">Student & Faculty <span className="text-gradient">Portals</span></h2>
+            <p className="section-desc">Access secure academic management portals for unified college operations, resource sharing, and student grading.</p>
+          </div>
+          <div className="grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", marginTop: 40 }}>
+            <div className="card" style={{ background: "rgba(30, 41, 59, 0.2)", border: "1px solid rgba(139, 92, 246, 0.25)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <div className="card-icon" style={{ fontSize: "3rem", marginBottom: 20 }}>👨‍🎓</div>
+                <h3 className="card-title" style={{ fontSize: "1.5rem", marginBottom: 12 }}>Student Hub</h3>
+                <p className="card-desc" style={{ color: "var(--text-muted)", lineHeight: 1.6 }}>
+                  Access assignments, view academic schedules, download shared lecture documents, and communicate directly with your instructors.
+                </p>
+              </div>
+              <div style={{ marginTop: 32 }}>
+                <a 
+                  href={process.env.NODE_ENV === "development" ? "http://localhost:3001/student/login" : "https://portal.mrlegezt.me/student/login"} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn btn-primary"
+                  style={{ width: "100%", textAlign: "center", justifyContent: "center" }}
+                >
+                  Enter Student Portal ➔
+                </a>
+              </div>
+            </div>
+            <div className="card" style={{ background: "rgba(30, 41, 59, 0.2)", border: "1px solid rgba(217, 70, 239, 0.25)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <div className="card-icon" style={{ fontSize: "3rem", marginBottom: 20 }}>👨‍🏫</div>
+                <h3 className="card-title" style={{ fontSize: "1.5rem", marginBottom: 12 }}>Faculty Hub</h3>
+                <p className="card-desc" style={{ color: "var(--text-muted)", lineHeight: 1.6 }}>
+                  Orchestrate your classes, manage assignment postings, upload course files, record attendance logs, and mentor students efficiently.
+                </p>
+              </div>
+              <div style={{ marginTop: 32 }}>
+                <a 
+                  href={process.env.NODE_ENV === "development" ? "http://localhost:3001/faculty/login" : "https://portal.mrlegezt.me/faculty/login"} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn btn-secondary"
+                  style={{ width: "100%", textAlign: "center", justifyContent: "center" }}
+                >
+                  Enter Faculty Portal ➔
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Documents Section */}
       <section className="section" id="documents-section" style={{ background: "var(--bg-secondary)" }}>
         <div className="container">

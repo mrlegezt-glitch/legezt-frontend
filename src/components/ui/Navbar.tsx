@@ -94,6 +94,15 @@ export function Navbar() {
           <li><Link href="/documents" onClick={() => setMobileOpen(false)}>Documents</Link></li>
           <li><Link href="/resume" onClick={() => setMobileOpen(false)}>Resume</Link></li>
           <li><Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link></li>
+          <li>
+            <a 
+              href={process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://portal.mrlegezt.me"}
+              onClick={() => setMobileOpen(false)}
+              style={{ color: "var(--accent-secondary)", fontWeight: "bold" }}
+            >
+              Portal
+            </a>
+          </li>
           {userId && isAdmin && (
             <li>
               <a 
