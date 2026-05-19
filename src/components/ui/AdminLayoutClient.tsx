@@ -17,7 +17,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Menu
 } from "lucide-react";
 
 const navItems = [
@@ -43,10 +44,12 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isStudentMenuOpen, setIsStudentMenuOpen] = useState(true);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
     <div className="admin-layout">
-      <aside className={`admin-sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+      {isMobileOpen && <div className="admin-mobile-overlay" onClick={() => setIsMobileOpen(false)} />}
+      <aside className={`admin-sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}>
         <button 
           className="sidebar-toggle-btn"
           onClick={() => setIsCollapsed(!isCollapsed)}
@@ -95,6 +98,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                           <Link 
                             href={child.href} 
                             className={`sidebar-submenu-link ${pathname === child.href ? 'active' : ''}`}
+                            onClick={() => setIsMobileOpen(false)}
                           >
                             {child.label}
                           </Link>
@@ -110,7 +114,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             const IconComponent = item.Icon;
             return (
               <li key={item.href || idx} style={{ marginBottom: "18px" }}>
-                <Link href={item.href!} className={`sidebar-3d-button ${isActive ? "active" : ""}`}>
+                <Link href={item.href!} className={`sidebar-3d-button ${isActive ? "active" : ""}`} onClick={() => setIsMobileOpen(false)}>
                   <span className="btn-3d-shadow"></span>
                   <span className="btn-3d-edge"></span>
                   <span className="btn-3d-front">
@@ -136,7 +140,15 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
       </aside>
-      <div className={`admin-content ${isCollapsed ? 'collapsed' : ''}`}>{children}</div>
+      <div className={`admin-content ${isCollapsed ? 'collapsed' : ''}`}>
+        <div className="admin-mobile-header">
+          <button onClick={() => setIsMobileOpen(true)} className="admin-mobile-toggle">
+            <Menu size={24} />
+          </button>
+          <div style={{ fontFamily: "var(--font-display)", fontWeight: "bold", letterSpacing: "1px" }}>Admin Panel</div>
+        </div>
+        {children}
+      </div>
     </div>
   );
 }
