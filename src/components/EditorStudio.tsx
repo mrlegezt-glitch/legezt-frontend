@@ -366,6 +366,7 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
 
   return (
     <div
+      className="studio-root"
       style={{
         position: "fixed",
         top: 0,
@@ -380,8 +381,44 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
         fontFamily: "system-ui, -apple-system, sans-serif"
       }}
     >
+      <style>{`
+        @media (max-width: 768px) {
+          .studio-root {
+            flex-direction: column !important;
+            overflow-y: auto !important;
+          }
+          .studio-sidebar {
+            width: 100% !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+            height: auto !important;
+            max-height: 55vh;
+            order: 2;
+          }
+          .studio-main {
+            height: 45vh !important;
+            order: 1;
+          }
+          .studio-canvas-container {
+            padding: 10px !important;
+          }
+          .editor-header-mobile {
+            flex-direction: column !important;
+            height: auto !important;
+            padding: 12px !important;
+            gap: 10px !important;
+          }
+          .tools-container-mobile {
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 8px !important;
+          }
+        }
+      `}</style>
+
       {/* Sidebar - Target distribution parameters */}
       <div
+        className="studio-sidebar"
         style={{
           width: "360px",
           borderRight: "1px solid rgba(255,255,255,0.06)",
@@ -622,7 +659,7 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
       </div>
 
       {/* Main Workspace Workspace */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100%" }}>
+      <div className="studio-main" style={{ flex: 1, display: "flex", flexDirection: "column", height: "100%" }}>
         {/* Workspace Topbar */}
         <div
           style={{
@@ -904,6 +941,7 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
         >
           {/* Editor Header */}
           <div
+            className="editor-header-mobile"
             style={{
               height: "60px",
               borderBottom: "1px solid rgba(255,255,255,0.08)",
@@ -918,7 +956,7 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
             </div>
 
             {/* Editing Tools */}
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div className="tools-container-mobile" style={{ display: "flex", alignItems: "center", gap: 16 }}>
               {/* Tool selector */}
               <div style={{ display: "flex", backgroundColor: "rgba(255,255,255,0.04)", padding: "4px", borderRadius: "6px", gap: 4 }}>
                 <button
@@ -1051,6 +1089,7 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
 
           {/* Editor Workspace Canvas */}
           <div
+            className="studio-canvas-container"
             style={{
               flex: 1,
               overflow: "auto",

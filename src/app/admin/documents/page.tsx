@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { formatFileSize, formatDate } from "@/lib/utils";
-import { FileText } from "lucide-react";
+import { FileText, Share2 } from "lucide-react";
 import EditorStudio from "@/components/EditorStudio";
 
 interface Doc {
@@ -20,6 +20,7 @@ export default function AdminDocuments() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [showEditor, setShowEditor] = useState(false);
+  const [activeShareDoc, setActiveShareDoc] = useState<Doc | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { fetchDocs(); }, []);
@@ -127,6 +128,7 @@ export default function AdminDocuments() {
                   <td>
                     <div style={{ display: "flex", gap: 8 }}>
                       <a href={doc.fileUrl} target="_blank" rel="noopener" className="btn btn-secondary btn-sm">View</a>
+                      <button className="btn btn-secondary btn-sm" onClick={() => setActiveShareDoc(doc)}>Share</button>
                       <button className="btn btn-danger btn-sm" onClick={() => handleDelete(doc.id)}>Delete</button>
                     </div>
                   </td>
@@ -151,6 +153,136 @@ export default function AdminDocuments() {
           uploaderRole="admin" 
         />
       )}
+      {activeShareDoc && (
+        <ShareModal 
+          doc={activeShareDoc} 
+          onClose={() => setActiveShareDoc(null)} 
+        />
+      )}
+    </div>
+  );
+}
+
+interface ShareModalProps {
+  doc: Doc;
+  onClose: () => void;
+}
+
+function ShareModal({ doc, onClose }: ShareModalProps) {
+  const getAbsoluteUrl = (url: string) => {
+    if (url.startsWith("http")) return url;
+    if (typeof window !== "undefined") {
+      return `${window.location.origin}${url}`;
+    }
+    return url;
+  };
+
+  const absoluteDownloadUrl = getAbsoluteUrl(doc.fileUrl);
+  const shareMessage = `*Mr. Legezt Portal* 📂\n\nHey! Check out this document: *${doc.title}*\nDownload link: ${absoluteDownloadUrl}\n\nJoin our LIET student portal to access syllabus, notes, assignments and more: https://portal.mrlegezt.me`;
+  
+  const handleWhatsAppShare = () => {
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
+    window.open(url, "_blank");
+  };
+
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: doc.title,
+          text: `Check out this document on LIET Portal: ${doc.title}`,
+          url: absoluteDownloadUrl
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      navigator.clipboard.writeText(absoluteDownloadUrl);
+      alert("Download link copied to clipboard!");
+    }
+  };
+
+  return (
+    <div 
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0,0,0,0.8)",
+        backdropFilter: "blur(8px)",
+        zIndex: 99999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }} 
+      onClick={onClose}
+    >
+      <div 
+        style={{
+          backgroundColor: "#121214",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "14px",
+          padding: "24px",
+          width: "360px",
+          maxWidth: "90%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.5)"
+        }} 
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: "bold", color: "#fff" }}>Share Document</h3>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: "#a0aec0", cursor: "pointer", fontSize: "1.2rem" }}>&times;</button>
+        </div>
+        
+        <p style={{ margin: 0, fontSize: "0.85rem", color: "#718096" }}>
+          Share <strong>{doc.title}</strong> with credits and invite link.
+        </p>
+
+        <button 
+          onClick={handleWhatsAppShare} 
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+            backgroundColor: "#25d366",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            padding: "12px",
+            fontWeight: "bold",
+            fontSize: "0.9rem",
+            cursor: "pointer"
+          }}
+        >
+          💬 Share on WhatsApp
+        </button>
+
+        <button 
+          onClick={handleNativeShare} 
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+            backgroundColor: "rgba(255,255,255,0.08)",
+            color: "#fff",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "8px",
+            padding: "12px",
+            fontWeight: "bold",
+            fontSize: "0.9rem",
+            cursor: "pointer"
+          }}
+        >
+          📱 Device Share / Copy Link
+        </button>
+      </div>
     </div>
   );
 }
