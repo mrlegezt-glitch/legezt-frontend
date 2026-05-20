@@ -73,12 +73,20 @@ export default async function HomePage() {
             <p className="hero-subtitle">
               Professional AI services, automation systems, premium digital resources, intelligent tools, and cyber solutions. Engineered for elite digital operations.
             </p>
-            <div className="hero-actions">
-              <Link href="/documents" className="btn btn-primary">
-                ⚡ ACCESS DATA VAULT
+            <div className="hero-actions" style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <a 
+                href={process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://portal.mrlegezt.me"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-primary"
+              >
+                GET STARTED WORKSPACE
+              </a>
+              <Link href="/documents" className="btn btn-secondary">
+                ACCESS DATA VAULT
               </Link>
               <Link href="/services" className="btn btn-secondary">
-                ⚙️ EXPLORE OPERATIONS
+                EXPLORE OPERATIONS
               </Link>
             </div>
             <div className="hero-stats">
@@ -128,7 +136,15 @@ export default async function HomePage() {
                 const features = JSON.parse(service.features || "[]") as string[];
                 return (
                   <div className="card" key={service.id}>
-                    <div className="card-icon">{service.icon || "🚀"}</div>
+                    <div className="card-icon">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)" }}>
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="22" y1="12" x2="18" y2="12" />
+                        <line x1="6" y1="12" x2="2" y2="12" />
+                        <line x1="12" y1="6" x2="12" y2="2" />
+                        <line x1="12" y1="22" x2="12" y2="18" />
+                      </svg>
+                    </div>
                     <h3 className="card-title">{service.title}</h3>
                     <p className="card-desc">{service.description}</p>
                     {features.length > 0 && (
@@ -143,9 +159,39 @@ export default async function HomePage() {
           ) : (
             <div className="grid-3">
               {[
-                { icon: "💼", title: "Consulting", desc: "Professional consulting services for your business needs." },
-                { icon: "📄", title: "Document Services", desc: "Quality document preparation, formatting, and distribution." },
-                { icon: "🌐", title: "Digital Solutions", desc: "Modern digital solutions to grow your online presence." },
+                { 
+                  icon: (
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)" }}>
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                    </svg>
+                  ), 
+                  title: "Consulting", 
+                  desc: "Professional consulting services for your business needs." 
+                },
+                { 
+                  icon: (
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)" }}>
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                  ), 
+                  title: "Document Services", 
+                  desc: "Quality document preparation, formatting, and distribution." 
+                },
+                { 
+                  icon: (
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)" }}>
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="2" y1="12" x2="22" y2="12" />
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                  ), 
+                  title: "Digital Solutions", 
+                  desc: "Modern digital solutions to grow your online presence." 
+                },
               ].map((s, i) => (
                 <div className="card" key={i}>
                   <div className="card-icon">{s.icon}</div>
@@ -156,7 +202,7 @@ export default async function HomePage() {
             </div>
           )}
           <div style={{ textAlign: "center", marginTop: 48 }}>
-            <Link href="/services" className="btn btn-secondary">View All Services →</Link>
+            <Link href="/services" className="btn btn-secondary">View All Services</Link>
           </div>
         </div>
       </section>
@@ -170,9 +216,14 @@ export default async function HomePage() {
             <p className="section-desc">Access secure academic management portals for unified college operations, resource sharing, and student grading.</p>
           </div>
           <div className="grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", marginTop: 40 }}>
-            <div className="card" style={{ background: "rgba(30, 41, 59, 0.2)", border: "1px solid rgba(139, 92, 246, 0.25)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div className="card" style={{ background: "rgba(10, 10, 10, 0.6)", border: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
               <div>
-                <div className="card-icon" style={{ fontSize: "3rem", marginBottom: 20 }}>👨‍🎓</div>
+                <div className="card-icon" style={{ marginBottom: 20 }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#fff" }}>
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
+                  </svg>
+                </div>
                 <h3 className="card-title" style={{ fontSize: "1.5rem", marginBottom: 12 }}>Student Hub</h3>
                 <p className="card-desc" style={{ color: "var(--text-muted)", lineHeight: 1.6 }}>
                   Access assignments, view academic schedules, download shared lecture documents, and communicate directly with your instructors.
@@ -186,13 +237,18 @@ export default async function HomePage() {
                   className="btn btn-primary"
                   style={{ width: "100%", textAlign: "center", justifyContent: "center" }}
                 >
-                  Enter Student Portal ➔
+                  Enter Student Portal
                 </a>
               </div>
             </div>
-            <div className="card" style={{ background: "rgba(30, 41, 59, 0.2)", border: "1px solid rgba(217, 70, 239, 0.25)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <div className="card" style={{ background: "rgba(10, 10, 10, 0.6)", border: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
               <div>
-                <div className="card-icon" style={{ fontSize: "3rem", marginBottom: 20 }}>👨‍🏫</div>
+                <div className="card-icon" style={{ marginBottom: 20 }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#fff" }}>
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                    <path d="M6 6h10M6 10h10M6 14h10" />
+                  </svg>
+                </div>
                 <h3 className="card-title" style={{ fontSize: "1.5rem", marginBottom: 12 }}>Faculty Hub</h3>
                 <p className="card-desc" style={{ color: "var(--text-muted)", lineHeight: 1.6 }}>
                   Orchestrate your classes, manage assignment postings, upload course files, record attendance logs, and mentor students efficiently.
@@ -206,7 +262,7 @@ export default async function HomePage() {
                   className="btn btn-secondary"
                   style={{ width: "100%", textAlign: "center", justifyContent: "center" }}
                 >
-                  Enter Faculty Portal ➔
+                  Enter Faculty Portal
                 </a>
               </div>
             </div>
@@ -226,12 +282,18 @@ export default async function HomePage() {
             <div className="grid-3">
               {documents.map((doc) => (
                 <div className="doc-card" key={doc.id}>
-                  <div className="doc-preview">📄{doc.category && <span className="doc-badge">{doc.category}</span>}</div>
+                  <div className="doc-preview">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)", marginRight: "8px" }}>
+                      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    {doc.category && <span className="doc-badge">{doc.category}</span>}
+                  </div>
                   <div className="doc-info">
                     <div className="doc-title">{doc.title}</div>
                     <p className="card-desc" style={{ marginBottom: 8 }}>{doc.description}</p>
                     <div className="doc-meta">
-                      <span>📥 {doc.downloads} downloads</span>
+                      <span>{doc.downloads} downloads</span>
                     </div>
                     <div className="doc-actions">
                       <Link href={`/documents`} className="btn btn-primary btn-sm">Download</Link>
@@ -242,7 +304,11 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="empty-state">
-              <div className="empty-state-icon">📁</div>
+              <div className="empty-state-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)", marginBottom: "16px" }}>
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
               <div className="empty-state-title">Documents coming soon</div>
               <p>Check back later for professional documents and resources.</p>
             </div>
@@ -258,8 +324,8 @@ export default async function HomePage() {
             Have a question or need a custom service? Get in touch with us today.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">📞 Contact Us</Link>
-            <Link href="/resume" className="btn btn-secondary">📄 View Resume</Link>
+            <Link href="/contact" className="btn btn-primary">Contact Us</Link>
+            <Link href="/resume" className="btn btn-secondary">View Resume</Link>
           </div>
         </div>
       </section>
@@ -302,7 +368,7 @@ export default async function HomePage() {
           </div>
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Legezt. All rights reserved.</span>
-            <span>Built with ❤️</span>
+            <span>Built with precision</span>
           </div>
         </div>
       </footer>
