@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Edit, Trash, Check, Search, RefreshCw, X, ShieldAlert, CheckCircle } from "lucide-react";
+import { globalPrefetcher } from "@/lib/greedyOptimizer";
 
 interface PortalStudent {
   id: string;
@@ -37,11 +38,19 @@ export default function PortalStudentsAdminPage() {
 
   const fetchStudents = async () => {
     try {
-      setIsLoading(true);
+      const cached = globalPrefetcher?.getCachedData("/api/admin/portal-students");
+      if (cached) {
+        setStudents(cached.students || []);
+        setIsLoading(false);
+      } else {
+        setIsLoading(true);
+      }
+      
       const res = await fetch("/api/admin/portal-students");
       if (res.ok) {
         const data = await res.json();
         setStudents(data.students || []);
+        globalPrefetcher?.prefetch("/api/admin/portal-students");
       }
     } catch (error) {
       console.error("Error fetching portal students:", error);
@@ -67,33 +76,43 @@ export default function PortalStudentsAdminPage() {
   }, [searchQuery, students]);
 
   const handleApprove = async (studentId: string) => {
+    const rollbackStudents = [...students];
+    setStudents(prev =>
+      prev.map(stu => stu.id === studentId ? { ...stu, status: "approved" } : stu)
+    );
+
     try {
       const res = await fetch("/api/admin/portal-students", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentId, status: "approved" }),
       });
-      if (res.ok) {
-        fetchStudents();
+      if (!res.ok) {
+        setStudents(rollbackStudents);
       }
     } catch (error) {
       console.error("Error approving student:", error);
+      setStudents(rollbackStudents);
     }
   };
 
   const handleDelete = async (studentId: string) => {
     if (!confirm("Are you sure you want to delete this student and all their portal data?")) return;
+    const rollbackStudents = [...students];
+    setStudents(prev => prev.filter(stu => stu.id !== studentId));
+
     try {
       const res = await fetch("/api/admin/portal-students", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentId }),
       });
-      if (res.ok) {
-        fetchStudents();
+      if (!res.ok) {
+        setStudents(rollbackStudents);
       }
     } catch (error) {
       console.error("Error deleting student:", error);
+      setStudents(rollbackStudents);
     }
   };
 
@@ -114,6 +133,25 @@ export default function PortalStudentsAdminPage() {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedStudent) return;
+    const rollbackStudents = [...students];
+    setStudents(prev =>
+      prev.map(stu =>
+        stu.id === selectedStudent.id
+          ? {
+              ...stu,
+              fullName: formData.fullName,
+              username: formData.username,
+              email: formData.email,
+              enrollmentNo: formData.enrollmentNo,
+              year: parseInt(formData.year),
+              branch: formData.branch,
+              status: formData.status
+            }
+          : stu
+      )
+    );
+    setIsEditModalOpen(false);
+
     try {
       const res = await fetch("/api/admin/portal-students", {
         method: "PATCH",
@@ -123,12 +161,12 @@ export default function PortalStudentsAdminPage() {
           ...formData
         }),
       });
-      if (res.ok) {
-        setIsEditModalOpen(false);
-        fetchStudents();
+      if (!res.ok) {
+        setStudents(rollbackStudents);
       }
     } catch (error) {
       console.error("Error updating student:", error);
+      setStudents(rollbackStudents);
     }
   };
 

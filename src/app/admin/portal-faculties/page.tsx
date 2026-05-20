@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Edit, Trash, Check, Search, RefreshCw } from "lucide-react";
+import { globalPrefetcher } from "@/lib/greedyOptimizer";
 
 interface PortalFaculty {
   id: string;
@@ -36,11 +37,19 @@ export default function PortalFacultiesAdminPage() {
 
   const fetchFaculties = async () => {
     try {
-      setIsLoading(true);
+      const cached = globalPrefetcher?.getCachedData("/api/admin/portal-faculties");
+      if (cached) {
+        setFaculties(cached.faculties || []);
+        setIsLoading(false);
+      } else {
+        setIsLoading(true);
+      }
+
       const res = await fetch("/api/admin/portal-faculties");
       if (res.ok) {
         const data = await res.json();
         setFaculties(data.faculties || []);
+        globalPrefetcher?.prefetch("/api/admin/portal-faculties");
       }
     } catch (error) {
       console.error("Error fetching portal faculties:", error);
@@ -66,33 +75,43 @@ export default function PortalFacultiesAdminPage() {
   }, [searchQuery, faculties]);
 
   const handleApprove = async (facultyId: string) => {
+    const rollbackFaculties = [...faculties];
+    setFaculties(prev =>
+      prev.map(fac => fac.id === facultyId ? { ...fac, status: "approved" } : fac)
+    );
+
     try {
       const res = await fetch("/api/admin/portal-faculties", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ facultyId, status: "approved" }),
       });
-      if (res.ok) {
-        fetchFaculties();
+      if (!res.ok) {
+        setFaculties(rollbackFaculties);
       }
     } catch (error) {
       console.error("Error approving faculty:", error);
+      setFaculties(rollbackFaculties);
     }
   };
 
   const handleDelete = async (facultyId: string) => {
     if (!confirm("Are you sure you want to delete this faculty member and all their portal data?")) return;
+    const rollbackFaculties = [...faculties];
+    setFaculties(prev => prev.filter(fac => fac.id !== facultyId));
+
     try {
       const res = await fetch("/api/admin/portal-faculties", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ facultyId }),
       });
-      if (res.ok) {
-        fetchFaculties();
+      if (!res.ok) {
+        setFaculties(rollbackFaculties);
       }
     } catch (error) {
       console.error("Error deleting faculty:", error);
+      setFaculties(rollbackFaculties);
     }
   };
 
@@ -113,6 +132,25 @@ export default function PortalFacultiesAdminPage() {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedFaculty) return;
+    const rollbackFaculties = [...faculties];
+    setFaculties(prev =>
+      prev.map(fac =>
+        fac.id === selectedFaculty.id
+          ? {
+              ...fac,
+              fullName: formData.fullName,
+              username: formData.username,
+              workEmail: formData.workEmail,
+              designation: formData.designation,
+              department: formData.department,
+              phone: formData.phone,
+              status: formData.status
+            }
+          : fac
+      )
+    );
+    setIsEditModalOpen(false);
+
     try {
       const res = await fetch("/api/admin/portal-faculties", {
         method: "PATCH",
@@ -122,12 +160,12 @@ export default function PortalFacultiesAdminPage() {
           ...formData
         }),
       });
-      if (res.ok) {
-        setIsEditModalOpen(false);
-        fetchFaculties();
+      if (!res.ok) {
+        setFaculties(rollbackFaculties);
       }
     } catch (error) {
       console.error("Error updating faculty:", error);
+      setFaculties(rollbackFaculties);
     }
   };
 
