@@ -3,11 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { formatFileSize, formatDate } from "@/lib/utils";
 import { FileText } from "lucide-react";
+import EditorStudio from "@/components/EditorStudio";
 
 interface Doc {
   id: string; title: string; description: string | null; fileName: string;
   fileUrl: string; fileSize: number; category: string | null;
   downloads: number; isPublic: boolean; createdAt: string;
+  year?: number | null; branch?: string | null; batch?: string | null;
 }
 
 export default function AdminDocuments() {
@@ -17,6 +19,7 @@ export default function AdminDocuments() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [showEditor, setShowEditor] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { fetchDocs(); }, []);
@@ -54,7 +57,12 @@ export default function AdminDocuments() {
     <div className="page-enter">
       <div className="admin-header">
         <h1 className="admin-title">Documents</h1>
-        <button className="btn btn-primary" onClick={() => setShowUpload(true)}>+ Upload Document</button>
+        <div style={{ display: "flex", gap: 12 }}>
+          <button className="btn btn-primary" onClick={() => setShowEditor(true)} style={{ background: "linear-gradient(135deg, #3b82f6, #8b5cf6)", border: "none" }}>
+            🎨 PDF Editor Studio
+          </button>
+          <button className="btn btn-primary" onClick={() => setShowUpload(true)}>+ Upload Document</button>
+        </div>
       </div>
 
       {showUpload && (
@@ -97,16 +105,25 @@ export default function AdminDocuments() {
         <div className="table-wrap">
           <table className="table">
             <thead>
-              <tr><th>Title</th><th>Category</th><th>Size</th><th>Downloads</th><th>Date</th><th>Actions</th></tr>
+              <tr><th>Title</th><th>Category</th><th>Target Audience</th><th>Size</th><th>Downloads</th><th>Uploaded At</th><th>Actions</th></tr>
             </thead>
             <tbody>
               {docs.map((doc) => (
                 <tr key={doc.id}>
                   <td style={{ fontWeight: 600 }}>{doc.title}</td>
                   <td><span className="badge badge-purple">{doc.category || "General"}</span></td>
+                  <td>
+                    <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+                      <span className="badge badge-secondary" style={{ fontSize: "0.7rem" }}>Yr: {doc.year ?? "All"}</span>
+                      <span className="badge badge-secondary" style={{ fontSize: "0.7rem" }}>Br: {doc.branch ?? "All"}</span>
+                      {doc.batch && <span className="badge badge-secondary" style={{ fontSize: "0.7rem" }}>Bt: {doc.batch}</span>}
+                    </div>
+                  </td>
                   <td>{formatFileSize(doc.fileSize)}</td>
                   <td>{doc.downloads}</td>
-                  <td>{formatDate(doc.createdAt)}</td>
+                  <td style={{ fontSize: "0.8rem", whiteSpace: "nowrap" }}>
+                    {new Date(doc.createdAt).toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" })}
+                  </td>
                   <td>
                     <div style={{ display: "flex", gap: 8 }}>
                       <a href={doc.fileUrl} target="_blank" rel="noopener" className="btn btn-secondary btn-sm">View</a>
@@ -126,6 +143,13 @@ export default function AdminDocuments() {
           <div className="empty-state-title">No documents yet</div>
           <p>Upload your first document to get started.</p>
         </div>
+      )}
+      {showEditor && (
+        <EditorStudio 
+          onClose={() => setShowEditor(false)} 
+          onUploadSuccess={fetchDocs} 
+          uploaderRole="admin" 
+        />
       )}
     </div>
   );
