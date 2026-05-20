@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { formatFileSize, formatDate } from "@/lib/utils";
+import { formatFileSize, formatDate, API_BASE_URL } from "@/lib/utils";
 
 interface Doc {
   id: string;
@@ -14,6 +14,19 @@ interface Doc {
   downloads: number;
   createdAt: string;
 }
+
+const getCorrectFileUrl = (url: string) => {
+  if (!url) return "";
+  if (url.startsWith("https://") || url.startsWith("http://")) {
+    if (url.includes("/uploads/")) {
+      const filePart = url.substring(url.indexOf("/uploads/"));
+      return `${API_BASE_URL}${filePart}`;
+    }
+    return url;
+  }
+  const cleanPath = url.startsWith("/") ? url : `/${url}`;
+  return `${API_BASE_URL}${cleanPath}`;
+};
 
 export function DocumentList({ documents }: { documents: Doc[] }) {
   const [search, setSearch] = useState("");
@@ -30,7 +43,7 @@ export function DocumentList({ documents }: { documents: Doc[] }) {
     try {
       await fetch(`/api/documents/${doc.id}/download`, { method: "POST" });
     } catch { /* ignore */ }
-    window.open(doc.fileUrl, "_blank");
+    window.open(getCorrectFileUrl(doc.fileUrl), "_blank");
   }
 
   return (

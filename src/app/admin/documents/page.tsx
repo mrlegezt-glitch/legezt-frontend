@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { formatFileSize, formatDate } from "@/lib/utils";
+import { formatFileSize, formatDate, API_BASE_URL } from "@/lib/utils";
 import { FileText, Share2 } from "lucide-react";
 import EditorStudio from "@/components/EditorStudio";
 
@@ -11,6 +11,19 @@ interface Doc {
   downloads: number; isPublic: boolean; createdAt: string;
   year?: number | null; branch?: string | null; batch?: string | null;
 }
+
+const getCorrectFileUrl = (url: string) => {
+  if (!url) return "";
+  if (url.startsWith("https://") || url.startsWith("http://")) {
+    if (url.includes("/uploads/")) {
+      const filePart = url.substring(url.indexOf("/uploads/"));
+      return `${API_BASE_URL}${filePart}`;
+    }
+    return url;
+  }
+  const cleanPath = url.startsWith("/") ? url : `/${url}`;
+  return `${API_BASE_URL}${cleanPath}`;
+};
 
 export default function AdminDocuments() {
   const [docs, setDocs] = useState<Doc[]>([]);
@@ -127,7 +140,7 @@ export default function AdminDocuments() {
                   </td>
                   <td>
                     <div style={{ display: "flex", gap: 8 }}>
-                      <a href={doc.fileUrl} target="_blank" rel="noopener" className="btn btn-secondary btn-sm">View</a>
+                      <a href={getCorrectFileUrl(doc.fileUrl)} target="_blank" rel="noopener" className="btn btn-secondary btn-sm">View</a>
                       <button className="btn btn-secondary btn-sm" onClick={() => setActiveShareDoc(doc)}>Share</button>
                       <button className="btn btn-danger btn-sm" onClick={() => handleDelete(doc.id)}>Delete</button>
                     </div>
@@ -169,15 +182,7 @@ interface ShareModalProps {
 }
 
 function ShareModal({ doc, onClose }: ShareModalProps) {
-  const getAbsoluteUrl = (url: string) => {
-    if (url.startsWith("http")) return url;
-    if (typeof window !== "undefined") {
-      return `${window.location.origin}${url}`;
-    }
-    return url;
-  };
-
-  const absoluteDownloadUrl = getAbsoluteUrl(doc.fileUrl);
+  const absoluteDownloadUrl = getCorrectFileUrl(doc.fileUrl);
   const shareMessage = `*Mr. Legezt Portal* 📂\n\nHey! Check out this document: *${doc.title}*\nDownload link: ${absoluteDownloadUrl}\n\nJoin our LIET student portal to access syllabus, notes, assignments and more: https://portal.mrlegezt.me`;
   
   const handleWhatsAppShare = () => {
