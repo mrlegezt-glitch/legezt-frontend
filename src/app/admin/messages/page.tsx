@@ -1,5 +1,6 @@
 import { formatDate, API_BASE_URL } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
+import { Mail } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function AdminMessages() {
   return (
     <div className="page-enter">
       <div className="admin-header">
-        <h1 className="admin-title">✉️ Messages</h1>
+        <h1 className="admin-title">Messages</h1>
         <span className="badge badge-purple">{messages.filter(m => !m.isRead).length} unread</span>
       </div>
 
@@ -52,7 +53,9 @@ export default async function AdminMessages() {
         </div>
       ) : (
         <div className="empty-state">
-          <div className="empty-state-icon">✉️</div>
+          <div className="empty-state-icon">
+            <Mail size={48} style={{ color: "var(--text-muted)", marginBottom: 12 }} />
+          </div>
           <div className="empty-state-title">No messages yet</div>
           <p>Contact form submissions will appear here.</p>
         </div>

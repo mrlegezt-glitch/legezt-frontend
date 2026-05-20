@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { formatFileSize, formatDate } from "@/lib/utils";
+import { FileText } from "lucide-react";
 
 interface Doc {
   id: string; title: string; description: string | null; fileName: string;
@@ -52,7 +53,7 @@ export default function AdminDocuments() {
   return (
     <div className="page-enter">
       <div className="admin-header">
-        <h1 className="admin-title">📄 Documents</h1>
+        <h1 className="admin-title">Documents</h1>
         <button className="btn btn-primary" onClick={() => setShowUpload(true)}>+ Upload Document</button>
       </div>
 
@@ -75,7 +76,9 @@ export default function AdminDocuments() {
             <div className="form-group">
               <label className="form-label">File (PDF) *</label>
               <div className="upload-zone" onClick={() => fileRef.current?.click()}>
-                <div className="upload-icon">📁</div>
+                <div className="upload-icon" style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
+                  <FileText size={32} style={{ color: "var(--text-muted)" }} />
+                </div>
                 <div className="upload-text">Click to <strong>select a file</strong></div>
                 <input ref={fileRef} type="file" accept=".pdf,.doc,.docx,.txt,.xlsx" style={{ display: "none" }} />
               </div>
@@ -117,7 +120,9 @@ export default function AdminDocuments() {
         </div>
       ) : (
         <div className="empty-state">
-          <div className="empty-state-icon">📁</div>
+          <div className="empty-state-icon">
+            <FileText size={48} style={{ color: "var(--text-muted)", marginBottom: 12 }} />
+          </div>
           <div className="empty-state-title">No documents yet</div>
           <p>Upload your first document to get started.</p>
         </div>

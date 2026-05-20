@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Sliders } from "lucide-react";
 
 interface ServiceItem {
   id: string; title: string; description: string; icon: string | null;
@@ -69,7 +70,7 @@ export default function AdminServices() {
   return (
     <div className="page-enter">
       <div className="admin-header">
-        <h1 className="admin-title">🛠️ Services</h1>
+        <h1 className="admin-title">Services</h1>
         <button className="btn btn-primary" onClick={openNew}>+ Add Service</button>
       </div>
 
@@ -87,8 +88,8 @@ export default function AdminServices() {
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               <div className="form-group">
-                <label className="form-label">Icon (emoji)</label>
-                <input className="form-input" value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} placeholder="🚀" />
+                <label className="form-label">Icon (name)</label>
+                <input className="form-input" value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} placeholder="Sliders" />
               </div>
               <div className="form-group">
                 <label className="form-label">Price</label>
@@ -116,7 +117,9 @@ export default function AdminServices() {
             return (
               <div className="card" key={s.id} style={{ opacity: s.isActive ? 1 : 0.5 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 12 }}>
-                  <div className="card-icon">{s.icon || "🚀"}</div>
+                  <div className="card-icon" style={{ display: "flex", alignItems: "center" }}>
+                    <Sliders size={20} style={{ color: "var(--text-primary)" }} />
+                  </div>
                   <span className={`badge ${s.isActive ? "badge-green" : "badge-red"}`}>
                     {s.isActive ? "Active" : "Inactive"}
                   </span>
@@ -142,7 +145,9 @@ export default function AdminServices() {
         </div>
       ) : (
         <div className="empty-state">
-          <div className="empty-state-icon">🛠️</div>
+          <div className="empty-state-icon">
+            <Sliders size={48} style={{ color: "var(--text-muted)", marginBottom: 12 }} />
+          </div>
           <div className="empty-state-title">No services yet</div>
           <p>Add your first service to showcase on the website.</p>
         </div>

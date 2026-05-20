@@ -78,7 +78,7 @@ export default function FacultiesAdminPage() {
   return (
     <div className="admin-page">
       <div className="admin-page-header">
-        <h1>👨‍🏫 Faculty Management</h1>
+        <h1>Faculty Management</h1>
         <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>+ Add Faculty</button>
       </div>
 

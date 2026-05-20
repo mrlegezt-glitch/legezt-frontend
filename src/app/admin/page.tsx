@@ -1,5 +1,6 @@
 import { API_BASE_URL } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
+import { Mail } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -93,7 +94,9 @@ export default async function AdminDashboard() {
         </div>
       ) : (
         <div className="empty-state">
-          <div className="empty-state-icon">✉️</div>
+          <div className="empty-state-icon">
+            <Mail size={48} style={{ color: "var(--text-muted)", marginBottom: 12 }} />
+          </div>
           <div className="empty-state-title">No messages yet</div>
         </div>
       )}

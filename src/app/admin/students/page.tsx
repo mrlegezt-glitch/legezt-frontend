@@ -78,7 +78,7 @@ export default function StudentsAdminPage() {
   return (
     <div className="admin-page">
       <div className="admin-page-header">
-        <h1>🎓 Student Management</h1>
+        <h1>Student Management</h1>
         <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>+ Add Student</button>
       </div>
 

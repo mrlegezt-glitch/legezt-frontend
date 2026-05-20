@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
+import { Mail, Send, Inbox, Users, RefreshCw, X, AlertTriangle, CheckCircle2, Calendar, CornerUpLeft } from "lucide-react";
 
 interface Contact {
   id: string;
@@ -168,7 +169,7 @@ export default function EmailWorkspacePage() {
   return (
     <div className="admin-page page-enter">
       <div className="admin-page-header">
-        <h1>📨 Legezt Email Workspace</h1>
+        <h1>Legezt Email Workspace</h1>
         <p style={{ color: "var(--text-muted)", fontSize: "0.9rem", marginTop: 4 }}>
           Send and receive administrative emails securely via <strong>info@mrlegezt.me</strong>
         </p>
@@ -183,8 +184,8 @@ export default function EmailWorkspacePage() {
         >
           <span className="btn-3d-shadow"></span>
           <span className="btn-3d-edge"></span>
-          <span className="btn-3d-front" style={{ justifyContent: "center" }}>
-            📨 Compose Dispatch
+          <span className="btn-3d-front" style={{ justifyContent: "center", gap: "8px" }}>
+            <Send size={16} /> Compose Dispatch
           </span>
         </button>
 
@@ -195,8 +196,8 @@ export default function EmailWorkspacePage() {
         >
           <span className="btn-3d-shadow"></span>
           <span className="btn-3d-edge"></span>
-          <span className="btn-3d-front" style={{ justifyContent: "center" }}>
-            📥 Incoming Inbox
+          <span className="btn-3d-front" style={{ justifyContent: "center", gap: "8px" }}>
+            <Inbox size={16} /> Incoming Inbox
           </span>
         </button>
       </div>
@@ -223,10 +224,13 @@ export default function EmailWorkspacePage() {
                   animation: "pulse-glow 2s infinite alternate",
                   backgroundColor: statusMsg.type === "success" ? "rgba(16, 185, 129, 0.12)" : "rgba(218, 38, 28, 0.12)",
                   border: statusMsg.type === "success" ? "1px solid rgba(16, 185, 129, 0.3)" : "1px solid rgba(218, 38, 28, 0.3)",
-                  color: statusMsg.type === "success" ? "#10b981" : "#DA261C"
+                  color: statusMsg.type === "success" ? "#10b981" : "#DA261C",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px"
                 }}
               >
-                {statusMsg.type === "success" ? "✅" : "⚠️"} {statusMsg.text}
+                {statusMsg.type === "success" ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />} {statusMsg.text}
               </div>
             )}
 
@@ -331,7 +335,7 @@ export default function EmailWorkspacePage() {
                     DISPATCHING SECURE MESSAGE...
                   </>
                 ) : (
-                  "⚡ BROADCAST SECURE EMAIL"
+                  "BROADCAST SECURE EMAIL"
                 )}
               </button>
             </form>
@@ -339,8 +343,8 @@ export default function EmailWorkspacePage() {
 
           {/* System Directory Quick Selector */}
           <div className="admin-card" style={{ padding: 24, alignSelf: "start" }}>
-            <h2 style={{ fontSize: "1.1rem", color: "#ffffff", fontWeight: 700, marginBottom: 16 }}>
-              👥 System Contacts Directory
+            <h2 style={{ fontSize: "1.1rem", color: "#ffffff", fontWeight: 700, marginBottom: 16, display: "flex", alignItems: "center", gap: "8px" }}>
+              <Users size={18} /> System Contacts Directory
             </h2>
             <p style={{ color: "var(--text-muted)", fontSize: "0.82rem", marginBottom: 20 }}>
               Click on any active profile below to populate the recipient field instantly.
@@ -397,7 +401,7 @@ export default function EmailWorkspacePage() {
           
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: 16, marginBottom: 24 }}>
             <h2 style={{ fontSize: "1.25rem", color: "#ffffff", fontWeight: 700, display: "flex", alignItems: "center", gap: 10 }}>
-              📥 Inbox Messages
+              Inbox Messages
             </h2>
             <button 
               onClick={fetchInbox} 
@@ -412,14 +416,14 @@ export default function EmailWorkspacePage() {
                 fontWeight: 700
               }}
             >
-              <span className={`sync-icon ${isLoadingInbox ? "sync-spinning" : ""}`} style={{ fontSize: "0.95rem" }}>🔄</span>
+              <RefreshCw size={14} className={isLoadingInbox ? "sync-spinning" : ""} />
               {isLoadingInbox ? "Syncing..." : "Sync Mailbox"}
             </button>
           </div>
 
           {inboxError && (
-            <div style={{ padding: "14px 20px", borderRadius: 8, backgroundColor: "rgba(218, 38, 28, 0.12)", border: "1px solid rgba(218, 38, 28, 0.3)", color: "#DA261C", fontSize: "0.9rem", fontWeight: 600, marginBottom: 20 }}>
-              ⚠️ {inboxError}
+            <div style={{ padding: "14px 20px", borderRadius: 8, backgroundColor: "rgba(218, 38, 28, 0.12)", border: "1px solid rgba(218, 38, 28, 0.3)", color: "#DA261C", fontSize: "0.9rem", fontWeight: 600, marginBottom: 20, display: "flex", alignItems: "center", gap: "8px" }}>
+              <AlertTriangle size={16} /> {inboxError}
             </div>
           )}
 
@@ -430,7 +434,9 @@ export default function EmailWorkspacePage() {
             </div>
           ) : inboxEmails.length === 0 ? (
             <div className="empty-state" style={{ padding: "60px 0" }}>
-              <div className="empty-state-icon" style={{ fontSize: "3rem", marginBottom: 12 }}>📥</div>
+              <div className="empty-state-icon" style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+                <Inbox size={48} style={{ color: "var(--text-muted)" }} />
+              </div>
               <div className="empty-state-title" style={{ fontSize: "1.2rem", fontWeight: 700, color: "#ffffff" }}>No emails in mailbox</div>
               <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>Direct incoming emails to info@mrlegezt.me will appear here.</p>
             </div>
@@ -490,13 +496,13 @@ export default function EmailWorkspacePage() {
                 </div>
                 <button 
                   onClick={() => setSelectedEmail(null)} 
-                  style={{ background: "transparent", border: "none", color: "var(--text-muted)", fontSize: "1.5rem", cursor: "pointer", padding: 0 }}
+                  style={{ background: "transparent", border: "none", color: "var(--text-muted)", display: "flex", alignItems: "center", cursor: "pointer", padding: 0 }}
                 >
-                  ✕
+                  <X size={20} />
                 </button>
               </div>
-              <div style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginTop: 10 }}>
-                📅 <strong>Received:</strong> {new Date(selectedEmail.date).toLocaleString()}
+              <div style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginTop: 10, display: "flex", alignItems: "center", gap: "6px" }}>
+                <Calendar size={14} /> <strong>Received:</strong> {new Date(selectedEmail.date).toLocaleString()}
               </div>
             </div>
 
@@ -567,7 +573,7 @@ export default function EmailWorkspacePage() {
                   gap: 8
                 }}
               >
-                ↩️ REPLY SENDER
+                <CornerUpLeft size={16} /> REPLY SENDER
               </button>
             </div>
           </div>

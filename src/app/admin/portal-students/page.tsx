@@ -136,7 +136,7 @@ export default function PortalStudentsAdminPage() {
     <div className="admin-page">
       <div className="admin-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
-          <h1>🔑 Portal Student Management</h1>
+          <h1>Portal Student Management</h1>
           <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginTop: 4 }}>
             Manage registered portal accounts, verify emails/status, and update details.
           </p>

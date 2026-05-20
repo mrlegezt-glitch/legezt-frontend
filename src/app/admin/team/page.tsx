@@ -79,7 +79,7 @@ export default function TeamAdminPage() {
   return (
     <div className="admin-page">
       <div className="admin-page-header">
-        <h1>👥 Team Management</h1>
+        <h1>Team Management</h1>
         <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>+ Add Team Member</button>
       </div>
 
