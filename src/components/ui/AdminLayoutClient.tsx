@@ -23,7 +23,15 @@ import {
 
 const navItems = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
-  { href: "/admin/faculties", label: "Faculties", Icon: GraduationCap },
+  { 
+    label: "Faculties", 
+    Icon: GraduationCap,
+    isSubmenu: true,
+    children: [
+      { href: "/admin/faculties", label: "Faculties Directory" },
+      { href: "/admin/portal-faculties", label: "Portal Faculties" }
+    ]
+  },
   { 
     label: "Students", 
     Icon: Users,
@@ -44,6 +52,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isStudentMenuOpen, setIsStudentMenuOpen] = useState(true);
+  const [isFacultyMenuOpen, setIsFacultyMenuOpen] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
@@ -68,13 +77,18 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             if (item.isSubmenu) {
               const isActive = item.children?.some(child => pathname === child.href);
               const IconComponent = item.Icon;
+              const isOpen = item.label === "Students" ? isStudentMenuOpen : isFacultyMenuOpen;
               return (
                 <li key={idx} style={{ marginBottom: "18px" }}>
                   <button 
                     className={`sidebar-3d-button ${isActive ? "active" : ""}`}
                     onClick={() => {
                       if (isCollapsed) setIsCollapsed(false);
-                      setIsStudentMenuOpen(!isStudentMenuOpen);
+                      if (item.label === "Students") {
+                        setIsStudentMenuOpen(!isStudentMenuOpen);
+                      } else {
+                        setIsFacultyMenuOpen(!isFacultyMenuOpen);
+                      }
                     }}
                   >
                     <span className="btn-3d-shadow"></span>
@@ -87,11 +101,11 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
                         <span className="btn-3d-label">{item.label}</span>
                       </div>
                       <span className="submenu-chevron" style={{ color: "var(--text-muted)", display: "flex" }}>
-                        {isStudentMenuOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                       </span>
                     </span>
                   </button>
-                  {isStudentMenuOpen && !isCollapsed && item.children && (
+                  {isOpen && !isCollapsed && item.children && (
                     <ul className="sidebar-submenu">
                       {item.children.map((child) => (
                         <li key={child.href} className="sidebar-submenu-item">
