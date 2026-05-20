@@ -40,6 +40,16 @@ interface EditorStudioProps {
 export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }: EditorStudioProps) {
   const [images, setImages] = useState<EditorImage[]>([]);
   const [activeImageId, setActiveImageId] = useState<string | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+
+  const handleMoveToPage = (fromIdx: number, toIdx: number) => {
+    if (fromIdx === toIdx || toIdx < 0 || toIdx >= images.length) return;
+    const updated = [...images];
+    const [removed] = updated.splice(fromIdx, 1);
+    updated.splice(toIdx, 0, removed);
+    setImages(updated);
+  };
   
   // Targeting / Metadata
   const [title, setTitle] = useState("");
@@ -759,44 +769,90 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
               {images.map((img, idx) => (
                 <div
                   key={img.id}
+                  draggable={true}
+                  onDragStart={(e) => {
+                    setDraggedIndex(idx);
+                    e.dataTransfer.effectAllowed = "move";
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                  }}
+                  onDrop={(e) => {
+                    if (draggedIndex === null) return;
+                    handleMoveToPage(draggedIndex, idx);
+                    setDraggedIndex(null);
+                  }}
+                  onDragEnd={() => setDraggedIndex(null)}
                   style={{
                     backgroundColor: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    border: draggedIndex === idx ? "2px dashed #3b82f6" : "1px solid rgba(255,255,255,0.06)",
                     borderRadius: "10px",
                     overflow: "hidden",
                     display: "flex",
                     flexDirection: "column",
-                    position: "relative"
+                    position: "relative",
+                    cursor: "grab",
+                    opacity: draggedIndex === idx ? 0.5 : 1,
+                    transition: "border-color 0.2s, opacity 0.2s"
                   }}
                 >
-                  {/* Page Indicator Tag */}
+                  {/* Page Indicator Tag with typed input */}
                   <div
                     style={{
                       position: "absolute",
                       top: 10,
                       left: 10,
-                      backgroundColor: "rgba(0,0,0,0.75)",
+                      backgroundColor: "rgba(0,0,0,0.85)",
                       color: "#fff",
                       fontSize: "0.75rem",
                       padding: "4px 8px",
-                      borderRadius: "4px",
+                      borderRadius: "6px",
                       fontWeight: "bold",
-                      zIndex: 2
+                      zIndex: 10,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      border: "1px solid rgba(255,255,255,0.1)"
                     }}
                   >
-                    Page {idx + 1}
+                    <span>Pg:</span>
+                    <input 
+                      type="number"
+                      min="1"
+                      max={images.length}
+                      value={idx + 1}
+                      onChange={(e) => {
+                        const newPage = parseInt(e.target.value);
+                        if (newPage >= 1 && newPage <= images.length) {
+                          handleMoveToPage(idx, newPage - 1);
+                        }
+                      }}
+                      style={{
+                        width: "36px",
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        borderRadius: "4px",
+                        color: "#fff",
+                        fontSize: "0.75rem",
+                        padding: "1px 2px",
+                        textAlign: "center"
+                      }}
+                    />
                   </div>
 
-                  {/* Image Viewport */}
+                  {/* Image Viewport (Click to open large preview) */}
                   <div
+                    onClick={() => setPreviewImageUrl(img.processedUrl)}
+                    title="Click for larger preview"
                     style={{
-                      height: "220px",
+                      height: "250px",
                       backgroundColor: "#181818",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       padding: "10px",
-                      position: "relative"
+                      position: "relative",
+                      cursor: "zoom-in"
                     }}
                   >
                     <img 
@@ -1182,6 +1238,59 @@ export default function EditorStudio({ onClose, onUploadSuccess, uploaderRole }:
               }}
             />
           </div>
+        </div>
+      )}
+      {/* Large Image Preview Overlay */}
+      {previewImageUrl && (
+        <div 
+          onClick={() => setPreviewImageUrl(null)}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0,0,0,0.9)",
+            zIndex: 13000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "zoom-out",
+            backdropFilter: "blur(10px)"
+          }}
+        >
+          <img 
+            src={previewImageUrl} 
+            alt="Large Preview"
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              objectFit: "contain",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.8)",
+              borderRadius: "8px"
+            }}
+          />
+          <button 
+            onClick={() => setPreviewImageUrl(null)}
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              backgroundColor: "rgba(255,255,255,0.15)",
+              border: "none",
+              color: "#fff",
+              borderRadius: "50%",
+              width: "40px",
+              height: "40px",
+              cursor: "pointer",
+              fontSize: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            &times;
+          </button>
         </div>
       )}
     </div>
