@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /**
  * A Least Recently Used (LRU) Cache with a strict space complexity limit.
@@ -144,4 +144,24 @@ export function useOptimisticAction<T>(
   };
 
   return [state, execute, isPending] as const;
+}
+
+/**
+ * A custom React hook to debounce any value update.
+ * Extremely useful to avoid UI lag during rapid keypress/search filtering.
+ */
+export function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 }

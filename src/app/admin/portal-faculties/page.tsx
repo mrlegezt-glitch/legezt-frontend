@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Edit, Trash, Check, Search, RefreshCw } from "lucide-react";
-import { globalPrefetcher } from "@/lib/greedyOptimizer";
+import { globalPrefetcher, useDebounce } from "@/lib/greedyOptimizer";
 
 interface PortalFaculty {
   id: string;
@@ -21,7 +21,8 @@ interface PortalFaculty {
 export default function PortalFacultiesAdminPage() {
   const [faculties, setFaculties] = useState<PortalFaculty[]>([]);
   const [filteredFaculties, setFilteredFaculties] = useState<PortalFaculty[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [localSearchQuery, setLocalSearchQuery] = useState("");
+  const searchQuery = useDebounce(localSearchQuery, 150);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedFaculty, setSelectedFaculty] = useState<PortalFaculty | null>(null);
@@ -189,8 +190,8 @@ export default function PortalFacultiesAdminPage() {
           <input
             type="text"
             placeholder="Search by name, email, designation, or department..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            value={localSearchQuery}
+            onChange={(e) => setLocalSearchQuery(e.target.value)}
             style={{
               width: "100%",
               padding: "10px 12px 10px 38px",
