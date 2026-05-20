@@ -30,22 +30,30 @@ export async function POST(req: NextRequest) {
     const { getToken } = await auth();
     const token = await getToken();
 
-    const contentType = req.headers.get("content-type") || "";
-    const headers: HeadersInit = {
-      "Authorization": `Bearer ${token}`
-    };
-    if (contentType) {
-      headers["Content-Type"] = contentType;
+    // Parse the multipart form data sent by the client
+    const clientFormData = await req.formData();
+    
+    // Construct a standard FormData payload for the backend API
+    const backendFormData = new FormData();
+
+    for (const [key, value] of clientFormData.entries()) {
+      if (value instanceof File) {
+        backendFormData.append(key, value, value.name);
+      } else {
+        backendFormData.append(key, value);
+      }
     }
 
-    // Stream the request body directly to the backend to support extremely large multi-image compilations
-    // and avoid memory-bound Next.js FormData parsing issues.
+    const headers: HeadersInit = {
+      "Authorization": `Bearer ${token}`
+      // Note: Do NOT set Content-Type header manually here. Node/Next fetch will 
+      // automatically generate the correct boundary string and set the Content-Type header.
+    };
+
     const res = await fetch(`${API_BASE_URL}/api/documents`, {
       method: "POST",
       headers,
-      body: req.body,
-      // @ts-ignore
-      duplex: "half", // Required in Node.js fetch when body is a stream
+      body: backendFormData,
     });
 
     const responseText = await res.text();
