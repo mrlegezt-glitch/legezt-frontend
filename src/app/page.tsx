@@ -39,19 +39,25 @@ export default async function HomePage() {
           <div className="hero-slideshow-overlay"></div>
         </div>
         <div className="hero-particles">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <div
-              key={i}
-              className="particle"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * -10}s`,
-                width: `${2 + Math.random() * 3}px`,
-                height: `${2 + Math.random() * 3}px`,
-              }}
-            />
-          ))}
+          {Array.from({ length: 25 }).map((_, i) => {
+            const left = (i * 17) % 100;
+            const top = (i * 23) % 100;
+            const delay = ((i * 7) % 10) * -1;
+            const size = 2 + (i % 3);
+            return (
+              <div
+                key={i}
+                className="particle"
+                style={{
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  animationDelay: `${delay}s`,
+                  width: `${size}px`,
+                  height: `${size}px`,
+                }}
+              />
+            );
+          })}
         </div>
         <div className="hero-two-column">
           <div className="hero-left">
