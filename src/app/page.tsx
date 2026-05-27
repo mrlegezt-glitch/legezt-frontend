@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { API_BASE_URL } from "@/lib/utils";
 
+const APK_DRIVE_LINK = "https://drive.google.com/file/d/16AIqV0cCbOjIHUMn6lpVRV2nK_V_g3HO/view?usp=sharing";
+const APK_DIRECT_DOWNLOAD = "https://drive.google.com/uc?export=download&id=16AIqV0cCbOjIHUMn6lpVRV2nK_V_g3HO";
+
 export default async function HomePage() {
   let services: Array<{ id: string; title: string; description: string; icon: string | null; features: string }> = [];
   let documents: Array<{ id: string; title: string; description: string | null; category: string | null; downloads: number; fileName: string }> = [];
@@ -269,6 +272,47 @@ export default async function HomePage() {
                   style={{ width: "100%", textAlign: "center", justifyContent: "center" }}
                 >
                   Enter Faculty Portal
+                </a>
+              </div>
+            </div>
+            <div className="card" style={{ background: "rgba(10, 10, 10, 0.6)", border: "1px solid rgba(255, 255, 255, 0.08)", backdropFilter: "blur(12px)", padding: "40px 32px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <div className="card-icon" style={{ marginBottom: 20 }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#3DDC84" }}>
+                    <path d="M12 2a5 5 0 0 1 5 5v5H7V7a5 5 0 0 1 5-5z" />
+                    <circle cx="9.5" cy="6.5" r="0.75" fill="#3DDC84" />
+                    <circle cx="14.5" cy="6.5" r="0.75" fill="#3DDC84" />
+                    <line x1="9" y1="2.5" x2="7.5" y2="1" />
+                    <line x1="15" y1="2.5" x2="16.5" y2="1" />
+                    <rect x="7" y="13" width="10" height="7" rx="1" />
+                    <rect x="4.5" y="13" width="1.5" height="5" rx="0.75" />
+                    <rect x="18" y="13" width="1.5" height="5" rx="0.75" />
+                    <rect x="9.5" y="20.5" width="1.5" height="2.5" rx="0.75" />
+                    <rect x="13" y="20.5" width="1.5" height="2.5" rx="0.75" />
+                  </svg>
+                </div>
+                <h3 className="card-title" style={{ fontSize: "1.5rem", marginBottom: 12 }}>Student Android App</h3>
+                <p className="card-desc" style={{ color: "var(--text-muted)", lineHeight: 1.6 }}>
+                  Surprise test notifications 🔔, live results, documents, and notifications — directly on your phone. Download the Samsung-compatible APK.
+                </p>
+              </div>
+              <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: "12px" }}>
+                <a 
+                  href={APK_DIRECT_DOWNLOAD} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn btn-primary"
+                  style={{ width: "100%", textAlign: "center", justifyContent: "center", background: "linear-gradient(135deg, #3DDC84 0%, #059669 100%)", borderColor: "#3DDC84" }}
+                >
+                  ⬇ Download APK
+                </a>
+                <a 
+                  href={APK_DRIVE_LINK} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{ textAlign: "center", color: "rgba(255, 255, 255, 0.45)", fontSize: "0.78rem", textDecoration: "none" }}
+                >
+                  Open in Google Drive ↗
                 </a>
               </div>
             </div>
